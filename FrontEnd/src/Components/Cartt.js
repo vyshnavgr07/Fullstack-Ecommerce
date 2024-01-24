@@ -1,67 +1,72 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { MDBCard, MDBCardBody, MDBCardImage, MDBCol, MDBContainer, MDBIcon, MDBRow, MDBTypography } from 'mdb-react-ui-kit';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { Data } from '../App';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Axios, Data } from '../App';
 
 
 const Cartt = () => {
-  const { setcart, product, setvieworder,loginuser, } = useContext(Data);
 
-  const navigate = useNavigate();
+  const { setcart, setvieworder } = useContext(Data);
+  const [product,setProduct]=useState([])
+  const userId=localStorage.getItem("userId")
+  // console.log(userId,"loooggggerr");
+  const navigate = useNavigate();                                                               
   const [cartuser,setcartuser]=useState([]);
+  const {id}=useParams()
+  
+
+  const fetchCart=async()=>{
+    try{
+      const response=await Axios.get(`api/users/${userId}/viewCart`) 
+      
+      if(response.status ===200){
+        setProduct(response.data.data)
+        console.log(response);
+            //  console.log(product,"c art");
+      }
+    } catch(error){
+      console.log(error);
+    }
+  }
+
+
   useEffect(()=>{
-    setcartuser(loginuser.cart);
-  },[loginuser.cart])
+    fetchCart()
+  },[])
 ;
-const removeTask = (x) => {
-  const newTask = cartuser.filter((item) => item.id !== x);
-  setcartuser(newTask);
-  loginuser.cart = newTask
-  toast.error('Your product is Removed');
+
+const handleQuantity = async (cartID, quantityChange) => {
+ 
+  const data ={id: cartID, quantityChange };
+ 
+  try {
+     await Axios.put(`/api/users/${userId}/cart`, data);
+     const response = await Axios.get(`/api/users/${userId}/viewCart`);
+     if(response.status === 200){
+      return fetchCart()
+     }
+  } catch (error) {
+     toast.error(error); 
+  }
+};
+
+const handleChekout = async () => {
+  try {
+    const response = await Axios.post(`/api/users/${userId}/payment`);
+    console.log(response,"payment");
+    if(response.status === 200){
+      const url = response.data.url
+      const confermation = window.confirm("Payment session created. Redirecting to the payment gateway. Continue?")
+      if(confermation) window.location.replace(url)
+    }
+  } catch (error) {
+    toast.error(error.response.data.message)
+    
+  }
 };
 
 
-  const handleinc = (x) => {
-    const productprice = product.find((item) => item.id === x);
-    const updatecart = cartuser.map((item) => {
-      if (item.id === x) {
-        if (item.quantity <= item.stock) {
-          item.quantity += 1;
-          item.newPrice = parseFloat(productprice.newPrice) * item.quantity;
-        }
-      }
-      return item;
-    });
-    setcart(updatecart);
-  };
-
-  const handledec = (x) => {
-    const productprice = product.find((item) => item.id === x);
-    const updatecart = cartuser.map((item) => {
-      if (item.id === x) {
-        if (item.quantity <= item.stock && item.quantity > 1) {
-          item.quantity -= 1;
-          item.newPrice = parseFloat(productprice.newPrice) * item.quantity;
-        }
-      }
-      return item;
-    });
-    setcart(updatecart);
-  };
-
-  const reducer = cartuser.reduce((acc, curr) => acc +parseFloat(curr.newPrice), 0);
-
-  const clear = () => {
-    loginuser.cart=[];
-    setcartuser([])
-    toast.success('Your Cart is Empty');
-  };
-
-  const order = () => {
-    navigate('/payment');
-    setvieworder(cartuser);
-  };
 
   return (
     <div>
@@ -77,44 +82,44 @@ const removeTask = (x) => {
                   <p className="mb-0">
                     <span className="text-warning"> </span>
                     <a href="#!" className="text-danger">
-                       {reducer} <i className="fas fa-angle-down mt-1"></i> 
+                       <i className="fas fa-angle-down mt-1"></i> 
                     </a>
                   </p>
                 </div>
               </div>
 
-              {cartuser.map((item) => (
+              {product.map((item) => (
                 <MDBCard key={item.id} className="rounded-3 mb-4">
                   <MDBCardBody className="p-4">
                     <MDBRow className="justify-content-between align-items-center">
                       <MDBCol md="12" lg="6" xl="4">
-                        <MDBCardImage className="rounded-3" fluid src={item.img} alt="products" />
+                        <MDBCardImage className="rounded-3" fluid src={item.productsId.image} alt="products" />
                       </MDBCol>
                       <MDBCol md="12" lg="6" xl="8">
-                        <p className="lead fw-normal mb-2">{item.title}</p>
+                        <p className="lead fw-normal mb-2">{item.productsId.title}</p>
                         <p>
                           <span className="text-muted">Size: </span>M{' '}
                           <span className="text-muted">Color: </span>Grey
                         </p>
                       </MDBCol>
                       <MDBCol md="12" lg="6" xl="4" className="d-flex align-items-center justify-content-around">
-                        <button className="border border-secondary p-2 m-1" variant="danger" onClick={() => handledec(item.id)}>
+                        <button className="border border-secondary p-2 m-1" variant="danger" onClick={()=>handleQuantity(item._id, -1)}>
                           -
                         </button>
                         <span className="border border-secondary p-3">{item.quantity}</span>
-                        <button className="border border-secondary p-2 m-1" variant="danger" onClick={() => handleinc(item.id)}>
+                        <button className="border border-secondary p-2 m-1" variant="danger" onClick={()=>handleQuantity(item._id, 1)}>
                           +
                         </button>
                       </MDBCol>
                       <MDBCol md="12" lg="6" xl="4">
                         <MDBTypography tag="h5" className="mb-0">
-                          {item.newPrice}
+                          {item.productsId.price}
                         </MDBTypography>
                       </MDBCol>
 
                       <MDBCol md="12" lg="6" xl="4" className="text-end">
                         <a href="#!" className="text-danger">
-                          <MDBIcon onClick={() => removeTask(item.id)} icon="trash text-danger" size="lg" />
+                          <MDBIcon onClick={""} icon="trash text-danger" size="lg" />
                         </a>
                       </MDBCol>
                     </MDBRow>
@@ -126,13 +131,13 @@ const removeTask = (x) => {
         </MDBContainer>
       </section>
       <div>
-         <h1>TOTAL {reducer}</h1> 
-        <button className="bg-warning m-2" onClick={(()=>clear())}>
+         <h1>TOTAL {""}</h1> 
+        <button className="bg-warning m-2" onClick={""}>
           ClearCart
         </button>
 
 
-  <button className="bg-success" onClick={order}>
+  <button className="bg-success" onClick={()=>handleChekout()}>
           Buy ALL
         </button>
       </div>

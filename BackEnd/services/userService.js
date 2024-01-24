@@ -1,10 +1,11 @@
 const jwt=require("jsonwebtoken")
-const products=require("../modles/ProductSchema")
+const products=require("../modles/ProductSchema")  
 
 module.exports={
     viewproduct:async()=>{
-        const prods=await products.find();
-        console.log(products,"userservice");
+        console.log("aaa");
+        const prods=await products.find(); 
+        console.log(products,"userservice"); 
         if(prods){
             return prods
         }
@@ -12,7 +13,7 @@ module.exports={
     productById:async(id)=>{
         prods=products.findById(id);
         if(prods){
-            return prods
+            return prods 
         }
         
     }

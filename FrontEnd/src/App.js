@@ -16,7 +16,7 @@ import Footer from './Common/Footer';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminLogin from './Components/AdminLogin';
-import Payment from './Components/Payment';
+import Payment from './Components/PaymentSuccess.js';
 import Cartt from './Components/Cartt';
 import Users from './Components/Admin/Users';
 import AdminProduct from "./Components/Admin/AdminProduct"
@@ -25,7 +25,18 @@ import SideBar from './Components/SideBar';
 import AddProduct from './Components/Admin/AddProduct';
 import AdminMain from './Components/Admin/AdminMain';
 import EditPro from './Components/Admin/EditPro';
-import Fetch from './Fetch';
+
+import axios from "axios";
+import OrderData from './Components/OrderData.js';
+
+
+export const Axios=axios.create({
+  baseURL:process.env.REACT_APP_API_URL,
+  headers:{
+    "Content-Type":"application/json",
+    Authorization:localStorage.getItem('jwt')
+  }
+})
 
 
 
@@ -56,15 +67,15 @@ const[loginuser,setloginuser]=useState([]);
      
       <Routes>
       <Route  path='/'  element= {<Home />} />
-        <Route  path='/login'  element= {<Login/>} />
-        <Route  path='/register'  element= { <Registration />} />
-        <Route  path='/main'  element= {<Main/> } />
-        <Route  path='/men'  element= {<Men/> } />
-        <Route  path='/women'  element= {<Women/> } />
-        <Route  path='/viewproducts/:id'  element= {<Viewproducts/> } />
-        <Route  path='/cart'  element= {<Cartt/>} />
+        <Route path='/login'  element= {<Login/>} />
+        <Route path='/register'  element= { <Registration />} />
+        <Route path='/main'  element= {<Main/> } />
+        <Route path='/men'  element= {<Men/> } />
+        <Route path='/women'  element= {<Women/> } />
+        <Route path='/viewproducts/:id'  element= {<Viewproducts/> } />
+        <Route path='/cart'  element= {<Cartt/>} />
         <Route path='/adminlogin' element={<AdminLogin/>}/>
-        <Route path='/payment/'  element={<Payment/>} />
+        <Route path='/paymentSuccess'  element={<Payment/>} />
         <Route path='/admin'     element={<AdminHome/>} />
         <Route path='/users'    element={<Users/>}/>
         <Route path='/adminproduct'  element={<AdminProduct/>} />
@@ -72,10 +83,12 @@ const[loginuser,setloginuser]=useState([]);
         <Route path="/sidebar"    element={<SideBar/>} />
         <Route path="/addproduct"    element={<AddProduct/>} />
         <Route path='/adminmain'        element={<AdminMain/>}/>
-        <Route path='/editpro/:id'          element={<EditPro/>}  />
+        <Route path='/editpro/:id' element={<EditPro/>}  />
+        <Route path='/orderDetails/:id'element={<OrderData/>}/>
+
       </Routes>
-      <Fetch/>
        <Footer/>
+     
     </Data.Provider>
 
    

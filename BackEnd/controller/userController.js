@@ -9,22 +9,26 @@ const { default: mongoose } = require("mongoose");
 const Order = require("../modles/orderSchema");
 const stripe=require("stripe")(process.env.stripe_secret);
 let sValue=[];
-const userService=require("../services/userService")
+const userService=require("../services/userService");
+const Product = require("../modles/ProductSchema");
+
 
 module.exports={
        
     userRegister:async(req,res)=>{
         const {value,error}=joiUserSchema.validate(req.body);
-        const {name,email,username,password}=value;
-        const hasedPassword=await bcrypt.hash(password,10)
         if(error){
-            res.status(400).json({
+            res.status(400).json({ 
                 status:'Error',
-                message:'Invalid user input.plese check data'
+                message:'Invalid user input.plese check data' 
             });
         }
+
+        const {name,email,username,password}=value;
+        const hasedPassword=await bcrypt.hash(password,10) 
+       
         await User.create({
-            name:name,
+            name:name, 
             email:email,
             username:username,
             password:hasedPassword,
@@ -44,14 +48,14 @@ module.exports={
             res.json(error.message);
         } 
 
-        const {username,password}=value;
+        const {username,password}=value; 
         const user=await User.findOne({
             username:username,
         });   
         if(!user){  
             return res.status(404).json({
                 status:"error",
-                message:"User not found"
+                message:"User not found" 
             }); 
         }    
 
@@ -79,7 +83,10 @@ module.exports={
  
         res
         .status(200)
-        .json({status:"success",message:"Login Succesfull",Token:token})
+        .json({status:"success",
+        message:"Login Succesfull",
+        Data:token,user
+      })
         
   
          },
@@ -87,20 +94,22 @@ module.exports={
 
          //user view all products
 
-      viewProduct: async(req,res)=>{
-        // const product=await products.find();
-        const product= await userService.viewproduct();
-        
-        // if(!product){
-        //     res.status(404).send({status:"error",message:"product not found"});
-        // }
-        res.status(200).send({
-            status:"success",
-            message:"succesfully fetched data",
-            data:product 
-        });  
-  
-       },
+         viewProduct: async (req, res) => {
+            try {
+              const product = await userService.viewproduct();
+              res.status(200).send({
+                status: "success",
+                message: "successfully fetched data",
+                data: product,
+              });
+            } catch (error) {
+              console.error('Error in viewProduct route:', error);
+              res.status(500).send({
+                status: "error",
+                message: "Internal server error",
+              });
+            }
+          },
 
        //specific products
 
@@ -121,57 +130,145 @@ module.exports={
        },
  
        //add to cart 
-       addToCart:async(req,res)=>{
-        const userId=req.params.id;
-        const user=await User.findById(userId);
-        if(!user){
-            return res.status(404).send({
-                status:"failed",
-                message:"user not found",
-            });
+       addToCart: async (req, res) => {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+      
+        if (!user) {
+          return res.status(404).send({
+            status: "failed",
+            message: "User not found",
+          });
         }
-         
-        const {productId}=req.body;
-
-        if(!productId){
-            return res.status(404).send({
-                status:"failed",
-                message:"product not found "
-            });
+      
+        const { productsId } = req.body;
+        console.log(productsId);
+      
+        if (!productsId ) {
+          return res.status(400).send({
+            status: "failed",
+            message: "Product ID is required in the request body",
+          });
+        }
+      
+        // Check if the product exists
+        const product = await Product.findById(productsId);
+        if (!product) {
+          return res.status(404).send({
+            status: "failed",
+            message: "Product not found",
+          });
         }
 
-        await User.updateOne({_id:userId},{$addToSet:{cart:productId}});
+        const isProductInCart = user.cart.some(item => item.productsId.equals(productsId));
+  
+        if (isProductInCart) {
+          return res.status(400).send({
+            status: "Failure",
+            message: "Product is already in the cart",
+          });
+        }
+        
+      
+        // Add the product to the cart
+        await User.updateOne({ _id: userId }, { $addToSet: { cart: { productsId: productsId} } });
+      
         res.status(200).send({
-            status:"success",
-            message:"succesfully product was added to cart",
-            
+          status: "success",
+          message: "Product successfully added to the cart",
         });
+      },
+
+      updateCartItemQuantity: async (req, res) => {
+        const userID = req.params.id;  
+        const { id, quantityChange } = req.body;
+        console.log(req.body)
+        
+        const user = await User.findById(userID);
+        if (!user) { return res.status(404).json({ message: 'User not found' }) }
+      
+        const cartItem = user.cart.id(id);
+        if (!cartItem) { return res.status(404).json({ message: 'Cart item not found' }) }
+      
+        cartItem.quantity += quantityChange;
+      
+        if (cartItem.quantity > 0) {
+          await user.save();
+        }
+      
+        res.status(200).json({
+          status: 'success',
+          message: 'Cart item quantity updated',
+          data: user.cart
+        });
+      },
+
+      removeCartProduct : async  (req, res) => {
+    
+        const userId = req.params.id
+        const itemId = req.params.itemId
+        console.log("itemId" ,itemId)
+        if(!itemId){
+          return res.status(404).json({message:"Product Not fount"})
+        }
+    
+        const user = await User.findById(userId)
+        if(!user){
+          res.status(404).json({message:"User not fount"})
+        }
+        const result = await User.updateOne(
+          { _id: userId },
+          { $pull: { cart: { productsId:itemId } } }
+        );
+      
+        if (result.modifiedCount > 0) {
+          console.log("Item removed successfully");
+          res.status(200).json({message:"Product removed successfuly",data: result})
+        } else {
+          console.log("Item not found in the cart");
+        }
+    
+    
+      },
 
 
-       },
+
+
+      
+
        // cart view
-      viewCartProduct:async(req,res)=>{
+      viewCartProduct:async(req,res)=>{  
         const userId=req.params.id;
-        const user=await User.findById(userId);
+        
+        
+        const user = await User.findById(userId).populate({
+          path: 'cart.productsId',
+          model: 'Product',
+        });
 
         if(!user){
             return res
             .status(404).json({
-                status:"failed",
+                status:"failed",  
                 message:"user not found"
             })
         }
-        const cartProductsId=user.cart;
+        const cartProductsId=user.cart; 
 
-        if(cartProductsId.length === 0){ 
+       
+
+        if(cartProductsId.length === 0){  
             return res.status(200).json({
                 status:"success",
-                message:"cart is empty",
+                message:"cart is empty",  
                 data:[]
             })
         }
         
-        const cartProducts=await products.find({_id:{$in:cartProductsId}});
+        
+        const cartProducts = user.cart;
+
+        console.log(cartProducts,"huhuh");
         res.status(200).json({
             status:"success",
             message:"Cart products fetched succesfully",
@@ -274,7 +371,7 @@ delete:async(req,res)=>{
 
 payment:async(req,res)=>{
     const userId=req.params.id;
-    const user = await User.findOne({ _id: userId }).populate("cart");
+    const user = await User.findOne({_id: userId }).populate("cart.productsId");
     // console.log("uuu",user)
     if(!user){
         return res.status(404).json({
@@ -283,42 +380,44 @@ payment:async(req,res)=>{
     }
 
     const cartProducts=user.cart  
-    // console.log("cart",cartProducts,);
+    console.log("cartuuuuu",cartProducts,);
     if(cartProducts.length===0){
-        return res.status(200).json({"status":"success",message:"Cart is empty",data:[]})
+        return res.status(200).json({"status":"success",message:"Cart is empty",data:[]});
     }
  
     const lineItems=cartProducts.map((item)=>{
+      // console.log(item.productsId.price,"pprr");
+      const unit_amount = Math.round(item.productsId.price * 100);
         return{ 
             price_data:{
                 currency:"inr",
                 product_data:{
-                    name:item.title,
-                    description:item.description
+                    name:item.productsId.title,
+                    description:item.productsId.description 
                 },
-                unit_amount:Math.round(item.price*100),
+                unit_amount,
             },
-            quantity:1,
+            quantity:item.quantity, 
         };
     });
-    // console.log('iii',lineItems)
+    // console.log('iii',lineItems) 
 
-        session = await stripe.checkout.sessions.create({
+       let  session = await stripe.checkout.sessions.create({  
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: `https://www.youtube.com/watch?v=1r-F3FIONl8&t=267s`, 
+        success_url: `http://localhost:3000/paymentSuccess`, 
  
       });
 
-    // console.log("sessionnn",session)
+    console.log("sessionnn",session)
     if(!session){ 
         return res.json({
             status:"Failure",
             message:"Error occured on session side",
         });
     }
-    sValue={
+   sValue={ 
         userId,
         user,
         session,
@@ -336,7 +435,9 @@ payment:async(req,res)=>{
 success: async (req, res) => {
     try {
       const { id, user, session } = sValue;
+      console.log(session,"ussssssssssss");
       const userId = user._id;
+      // console.log(userId,"zzzzzzzzzzz");
       const cartItems = user.cart;
   
      
@@ -384,48 +485,83 @@ success: async (req, res) => {
     }
   },
 
-  orderDetails: async (req, res) => {
-    const userId = req.params.id;
-  
-    try {
-      const user = await User.findById(userId).populate('orders');
-  
-      if (!user) {
-        return res.status(404).json({
-          status: "failure",
-          message: "User Not Found",
-        });
-      }
-  
-      const orderProducts = user.orders;
-  
-      if (orderProducts.length === 0) {
-        return res.status(200).json({
-          message: "NO Orders Yet",
-          data: [],
-        });
-      }
-  
-      const orderProductIds = orderProducts.map(orderId => orderId.toString());
+//   orderDetails: async (req, res) => {
+//     const userId = req.params.id;
 
-      // Populate the 'products' field in each order
-      const ordersWithProducts = await Order.find({ _id: { $in: orderProductIds } })
-        .populate("products");
+//     try {
+//         const user = await User.findById(userId).populate('orders');
+//   // console.log(user,"jjj")
+//         if (!user) {
+//             return res.status(404).json({
+//                 status: "failure",
+//                 message: "User Not Found",
+//             });
+//         }
   
-      res.status(200).json({
-        message: "Ordered Products Details Found",
-        data: ordersWithProducts,
+//         const orderProducts = user.orders;
+//         // console.log(orderProducts,"ooorrr")
+
+//         if (orderProducts.length === 0) {
+//             return res.status(200).json({
+//                 message: "You don't have any product orders",
+//                 data: [],
+//             });
+//         }
+//         const ordersWithProducts = await Order.find({ _id: { $in: orderProducts } })
+//         .populate('products');
+    
+//         console.log(ordersWithProducts, "ordered"); 
+  
+//         res.status(200).json({
+//             message: "Ordered Products Details Found",
+//             data: ordersWithProducts,
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({
+//             status: "failure",
+//             message: "Internal Server Error",
+//         });
+//     }
+// }
+
+orderDetails: async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findById(userId).populate('orders');
+
+    if (!user) {
+      return res.status(404).json({
+        status: 'failure',
+        message: 'User not found',
       });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({
-        status: "failure",
-        message: "Internal Server Error",
+    }
+
+    const orderProducts = user.orders;
+
+    if (orderProducts.length === 0) {
+      return res.status(200).json({
+        message: "You don't have any product orders",
+        data: [],
       });
-    } 
+    }
+
+    const ordersWithProducts = await Order.find({ _id: { $in: orderProducts } })
+      .populate('products');
+
+    res.status(200).json({
+      message: 'Ordered Products Details Found',
+      data: ordersWithProducts,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: 'failure',
+      message: 'Internal Server Error',
+    });
   }
-
-
+},
     
 
          

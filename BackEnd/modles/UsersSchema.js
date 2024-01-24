@@ -1,17 +1,22 @@
 const mongoos=require("mongoose")
-// const autopopulate = require('mongoose-autopopulate')
+// const autopopulate = require('mongoose-autopopulate') 
 
 const userSchema=new mongoos.Schema({
     name:String,
     email:String,
     username:String,
     password:String,
-    // cart: [{ type:mongoos.Schema.ObjectId,ref:'Product', autopopulate: true }],
-    cart: [{ type:mongoos.Schema.ObjectId,ref:'Product' }],
-    wishlist:[{type:mongoos.Schema.ObjectId,ref:'Product'}],
-    orders:[]
+    cart:[
+        {
+            productsId:{type:mongoos.Schema.ObjectId,ref:"Product"},
+            quantity:{type:Number,default:1}
+        }
+    ],
+
+    wishlist:[{type:mongoos.Schema.ObjectId,ref:'Product'}], 
+    orders: [{ type:mongoos.Schema.ObjectId, ref:'Order' }],
 })
    
-// userSchema.plugin(autopopulate);  
+  
 
 module.exports=mongoos.model("User",userSchema) 

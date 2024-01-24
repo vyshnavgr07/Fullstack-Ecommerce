@@ -14,7 +14,7 @@ export const Product=[
       category: "sneakers",
       gender:'men',
       quantity:1,
-      stock:6
+      stock:6                                                                                                                                                                                                                                                     
     },
     {
       id:2,

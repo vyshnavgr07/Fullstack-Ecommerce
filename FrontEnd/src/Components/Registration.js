@@ -1,27 +1,47 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Data } from '../App';
+import axios from 'axios'
+import { toast } from 'react-toastify';
 
-const Registration = () => {
+
+const Registration = () => { 
   const navigate = useNavigate();
   const { userData, setUserData } = useContext(Data);
   const userNameRef = useRef(null);
   const emailIdRef = useRef(null);
   const passwordRef = useRef(null);
+  const namesref=useRef(null); 
   const [errorMessage, setErrorMessage] = useState('');
+
+
 
   const submit = (e) => {
     e.preventDefault();
+    const name=namesref.current.value;
+    const email = emailIdRef.current.value;
     const username = userNameRef.current.value;
-    const emailId = emailIdRef.current.value;
-    const password = passwordRef.current.value;
+     const password = passwordRef.current.value;
 
-    if (!username || !emailId || !password) {
+    try{
+      const payload={name,email,username,password};
+      const response=axios.post(
+        "http://localhost:4000/api/users/register",payload);
+        if(response.status === 201){
+          toast.success("Registration successful")
+        
+navigate('/login');
+        }   
+      }catch(error){
+          console.log(error);  
+        }
+
+    if (!username || !email || !password) {
       setErrorMessage('Please fill out the form');
       return;
     }
 
-    const isEmailValid = /\S+@\S+\.\S+/.test(emailId);
+    const isEmailValid = /\S+@\S+\.\S+/.test(email);
     if (!isEmailValid) {
       setErrorMessage('Please enter a valid email address.');
       return;
@@ -38,10 +58,10 @@ const Registration = () => {
     }
 
     setErrorMessage('');
-    const newUser = { userName: username, emailId: emailId, password: password, cart: [] };
-    setUserData([...userData, newUser]);
+    // const newUser = {name:names, userName: username, emailId: emailId, password: password, cart: [] };
+    // setUserData([...userData, newUser]);  
 
-    navigate('/login');
+    // navigate('/login');
   };
 
   return (
@@ -51,9 +71,11 @@ const Registration = () => {
           <h1 className='mt-3' style={{ fontFamily: 'inherit' }}>
             SIGN UP
           </h1>
+          <input ref={namesref} className='form-control mt-3' type='text' placeholder='name' />
+          <br />
           <input ref={userNameRef} className='form-control mt-3' type='text' placeholder='Username' />
           <br />
-          <input ref={emailIdRef} className='form-control mt-4' type='email' placeholder='Email' />
+          <input ref={emailIdRef} className='form-control mt-4' type='email' placeholder='Email' /> 
           <br />
           <input ref={passwordRef} className='form-control mt-4' type='password' placeholder='Password' />
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}

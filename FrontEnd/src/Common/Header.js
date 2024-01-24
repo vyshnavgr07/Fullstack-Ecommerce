@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav, Container} from 'react-bootstrap';
 import { BsCartFill } from 'react-icons/bs';
+import { AiFillCalendar } from "react-icons/ai";
 import { MdAdminPanelSettings } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Data } from '../App';
@@ -11,21 +12,19 @@ import "./Header.css"
 
 const Header = () => {
   const navigate = useNavigate();
-  const { login, setLogin, userData} = useContext(Data);
-
+  // const { login, setLogin, userData} = useContext(Data);
+const id=localStorage.getItem("userId")
   const logout = () => {
-    setLogin(false);
+    
     navigate('/');
     
     toast.error('You have logged out');
   };
 
   const carticon = () => {
-    if (login) {
+     
       navigate('/cart');
-    } else {
-      toast.error('Please Login');
-    }
+   
   };
 
   const logoStyles = {
@@ -62,21 +61,16 @@ const Header = () => {
             </Nav>
 
             <Nav className="d-flex my-3 nav-left  fw-bold" navbarScroll>
-              {login === false ? (
+              
                 <Nav.Link className="text" onClick={() => navigate('/login')}>
                   Login
                 </Nav.Link>
-              ) : (
-                <>
-                  <Nav.Link className="text-danger">{userData.userName}</Nav.Link>
-                  <Nav.Link className="text-danger" onClick={logout}>
-                    LogOut
-                  </Nav.Link>
-                  
-                  </>
-              )}
+              
+               
+            
           <BsCartFill style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={carticon} />
              <MdAdminPanelSettings style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={() => navigate('/adminlogin')} />
+             <AiFillCalendar  style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={() => navigate(`/orderDetails/${id}`)} />
              </Nav>
           </Navbar.Collapse>
         </Container>

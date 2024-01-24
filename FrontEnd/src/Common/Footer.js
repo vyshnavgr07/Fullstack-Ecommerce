@@ -40,6 +40,7 @@ const Footer = () => {
             <h5 className="text-uppercase mb-4 font-weight-bold">Contact</h5>
             <p>
             <BsInstagram />  <BsFacebook/> <AiFillTwitterCircle/> <BsWhatsapp/>
+            
             </p>
            
           </div>

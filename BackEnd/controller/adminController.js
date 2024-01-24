@@ -15,9 +15,9 @@ module.exports=     {
 
        if(reqBody){
         res.status(200).send({
-            status:"success",
+            status:"success", 
             message:"Admin registaration succesful",
-            data:reqBody
+            data:reqBody 
 
         });
        }
@@ -80,21 +80,22 @@ res.status(200).send({
 creatProduct:async(req,res)=>{
     const {value,error}=joiPoductSchema.validate(req.body);
    
-    const {title,description,price,image,category}=value;
+    const {title,description,price,image,gender,category}=value;
      
     if(error){
         return res.status(400).json({error:error.details[0].message});
 
-    }else{
+    }else{ 
         await products.create({
             title,
             description,
             price,
             image,
+            gender,
             category,
         });
 
-        res.status(201).json({
+        res.status(201).json({ 
   
             status:"success",
             message:"Succesfully Created products",
