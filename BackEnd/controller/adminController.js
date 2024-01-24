@@ -8,31 +8,55 @@ const order=require("../modles/orderSchema")
 const adminService=require("../services/adminService")
 
 module.exports=     {
-    login:async(req,res)=>{
-        //const {email,password}=req.body;
-        // console.log(process.env.ADMIN_EMAIL);
-       const reqBody= adminService.adminLogin(req.body)
+    // login:async(req,res)=>{
+    //     //const {email,password}=req.body;
+    //     // console.log(process.env.ADMIN_EMAIL);
+    //    const reqBody= adminService.adminLogin(req.body)
 
-       if(reqBody){
-        res.status(200).send({
-            status:"success", 
-            message:"Admin registaration succesful",
-            data:reqBody 
+    //    if(reqBody){
+    //     res.status(200).send({
+    //         status:"success", 
+    //         message:"Admin registaration succesful",
+    //         data:reqBody 
 
-        });
-       }
+    //     });
+    //    }
    
-        else {
-           res.status(404).json({
-            status:"error",
-            message:"this is not an admin"
-          })
-     
-            }
+    //     else {
+    //        res.status(404).json({
+    //         status:"error",
+    //         message:"this is not an admin"
+    //       })
+    //         }
+    //     },
 
-    
 
-        },
+    login: async (req,res) => {
+        const { email, password } = req.body;  
+        // console.log("admin:",password)
+        if (
+          email === process.env.ADMIN_EMAIL &&
+          password === process.env.ADMIN_PASSWORD
+        ) {
+          const toekn = jwt.sign(
+            { email },
+            process.env.ADMIN_ACCESS_TOKEN_SECRET 
+          );  
+          return res.status(200).send({
+            statu: "Succes",
+            message: "Admin registratin succs full",
+            data: toekn,
+          });
+        } else {
+          return res.status(404).json({
+            status: "error",
+            message: "Thsi is no an admin ",
+          });
+        }
+      },
+
+
+
 
         //to find all user
 

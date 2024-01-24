@@ -23,6 +23,7 @@ export default function Login() {
     }
 
     let url = 'http://localhost:4000/api/users/userlogin';
+  
 
     const adminUserName = process.env.REACT_APP_ADMIN_EMAIL;
     console.log(adminUserName, 'adminnnnn');
@@ -34,7 +35,7 @@ export default function Login() {
 
     try {
       const payload = { username, password };
-      const response = await axios.post(url , payload);
+      const response = await axios.post(url, payload);
       console.log(response,"resss")
       if(response.status === 200){
 username !== adminUserName && localStorage.setItem("userId",response.data.user._id)

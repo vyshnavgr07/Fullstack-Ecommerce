@@ -74,7 +74,7 @@ const[loginuser,setloginuser]=useState([]);
         <Route path='/women'  element= {<Women/> } />
         <Route path='/viewproducts/:id'  element= {<Viewproducts/> } />
         <Route path='/cart'  element= {<Cartt/>} />
-        <Route path='/adminlogin' element={<AdminLogin/>}/>
+        {/* <Route path='/adminlogin' element={<AdminLogin/>}/> */}
         <Route path='/paymentSuccess'  element={<Payment/>} />
         <Route path='/admin'     element={<AdminHome/>} />
         <Route path='/users'    element={<Users/>}/>
