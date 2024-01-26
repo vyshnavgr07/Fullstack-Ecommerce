@@ -12,39 +12,39 @@ export default function Login() {
   const handlelogin = async (e) => {
     e.preventDefault();
 
-    const username = e.target.elements.username.value.trim();
+    const email = e.target.elements.email.value.trim();
     const password = e.target.elements.password.value.trim();
+    const adminEmail = process.env.REACT_APP_ADMIN_EMAIL; 
+    console.log(adminEmail, 'adminnnnn');
 
     
 
-    if (username === '' || password === '') { 
+    if (email === '' || password === '') { 
       toast.error('Enter both username and password');
       return;
     }
 
-    let url = 'http://localhost:4000/api/users/userlogin';
+    let url = 'http://localhost:4000/api/users/userlogin'; 
   
 
-    const adminUserName = process.env.REACT_APP_ADMIN_EMAIL;
-    console.log(adminUserName, 'adminnnnn');
-
-    if (username === adminUserName) {
+    
+    if (email === adminEmail) {
       url = 'http://localhost:4000/api/admin/login';
       
     }
 
     try {
-      const payload = { username, password };
+      const payload = { email:email, password };
       const response = await axios.post(url, payload);
-      console.log(response,"resss")
+      console.log(response,"resss") 
       if(response.status === 200){
-username !== adminUserName && localStorage.setItem("userId",response.data.user._id)
-username === adminUserName && localStorage.setItem("role","Admin")
-localStorage.setItem("jwt",response.data.Data)
-localStorage.setItem("userName",response.data.user.name)
+email !== adminEmail && localStorage.setItem("userId",response.data.Data.id)
+email === adminEmail && localStorage.setItem("role","Admin")
+localStorage.setItem("jwt",response.data.Data.Token)
+localStorage.setItem("userName",response.data.Data.Username)
 
 
-if(username === adminUserName){
+if(email === adminEmail){
   navigate('/admin');
   toast.success("Login Success")
 }else{
@@ -104,10 +104,10 @@ if(username === adminUserName){
           <Row className="mb-3">
             <Col>
               <input className="form-control"  
-                     label="User Name"
-                    id="formControlLg"
+                     label="email addres"
+                    id="email"
                     type="text"
-                    name="username"
+                    name="email"
                     size="lg"
                     required />
             </Col>

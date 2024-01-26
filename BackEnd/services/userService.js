@@ -3,7 +3,7 @@ const products=require("../modles/ProductSchema")
 
 module.exports={
     viewproduct:async()=>{
-        console.log("aaa");
+        console.log("aaa"); 
         const prods=await products.find(); 
         console.log(products,"userservice"); 
         if(prods){
