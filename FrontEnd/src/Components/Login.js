@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { Axios } from '../App';
+
 
 export default function Login() {
   const [LoginUser, setLoginUser] = useState([]);
@@ -15,7 +17,7 @@ export default function Login() {
     const email = e.target.elements.email.value.trim();
     const password = e.target.elements.password.value.trim();
     const adminEmail = process.env.REACT_APP_ADMIN_EMAIL; 
-    console.log(adminEmail, 'adminnnnn');
+    // console.log(adminEmail, 'adminnnnn');
 
     
 
@@ -29,22 +31,32 @@ export default function Login() {
 
     
     if (email === adminEmail) {
+      
       url = 'http://localhost:4000/api/admin/login';
       
     }
 
     try {
       const payload = { email:email, password };
-      const response = await axios.post(url, payload);
+      console.log(payload);
+      const response=await Axios.post(url,payload)
+
       console.log(response,"resss") 
-      if(response.status === 200){
-email !== adminEmail && localStorage.setItem("userId",response.data.Data.id)
-email === adminEmail && localStorage.setItem("role","Admin")
-localStorage.setItem("jwt",response.data.Data.Token)
-localStorage.setItem("userName",response.data.Data.Username)
+       
+   if(response.status === 200){
+
+      
+      // email !== adminEmail && localStorage.setItem("userId",response.data.i)
+      // email === adminEmail && localStorage.setItem("role","Admin")
+
+localStorage.setItem("jwt",response.data.Data.token)
+localStorage.setItem("userName",response.data.Data.user.name)
+localStorage.setItem("userId",response.data.Data.user._id)
+localStorage.setItem("email",response.data.Data.user.email)
 
 
-if(email === adminEmail){
+
+if(email === adminEmail){ 
   navigate('/admin');
   toast.success("Login Success")
 }else{
@@ -138,6 +150,8 @@ if(email === adminEmail){
               </Button>
             </Col>
           </Row>
+
+        
         </form>
 
         <Row>

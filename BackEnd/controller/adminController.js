@@ -32,21 +32,23 @@ module.exports=     {
 
 
     login: async (req,res) => {
-        const { email, password } = req.body;  
+        const { email, password } = req.body;     
         // console.log("admin:",password)
         if (
           email === process.env.ADMIN_EMAIL &&
           password === process.env.ADMIN_PASSWORD
         ) {
-          const toekn = jwt.sign(
+          const token = jwt.sign(
             { email },
             process.env.ADMIN_ACCESS_TOKEN_SECRET 
           );  
           return res.status(200).send({
             statu: "Succes",
             message: "Admin registratin succs full",
-            data: toekn,
+            Data:{token},
+           
           });
+        
         } else {
           return res.status(404).json({
             status: "error",
@@ -55,7 +57,7 @@ module.exports=     {
         }
       },
 
-
+      
 
 
         //to find all user

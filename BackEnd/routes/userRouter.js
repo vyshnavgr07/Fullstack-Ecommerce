@@ -26,4 +26,4 @@ router
 .get("/payment/success",tryCatchMiddleware(userControler.success))
 .get("/:id/orders",tryCatchMiddleware(userControler.orderDetails))
 
-module.exports=router      
+module.exports=router       

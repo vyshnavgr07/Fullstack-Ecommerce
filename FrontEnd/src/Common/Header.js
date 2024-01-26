@@ -14,14 +14,25 @@ const Header = () => {
   const navigate = useNavigate();
   // const { login, setLogin, userData} = useContext(Data);
 const id=localStorage.getItem("userId")
+
+
+
   const logout = () => {
-    
+    localStorage.removeItem("userId")
+    localStorage.removeItem("userName")
+    localStorage.removeItem("role")
+    localStorage.removeItem("jwt")
+    localStorage.removeItem("email")
+
     navigate('/');
     
     toast.error('You have logged out');
   };
 
-  const carticon = () => {
+
+
+
+const carticon = () => {
      
       navigate('/cart');
    
@@ -64,6 +75,10 @@ const id=localStorage.getItem("userId")
               
                 <Nav.Link className="text" onClick={() => navigate('/login')}>
                   Login
+                </Nav.Link>
+
+                <Nav.Link className="text-danger" onClick={logout}>
+                  LogOut
                 </Nav.Link>
               
                
