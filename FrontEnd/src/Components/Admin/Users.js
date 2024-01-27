@@ -1,15 +1,45 @@
-import React, { useContext } from 'react';
-import { Data } from '../../App';
+import React, { useContext, useEffect, useState } from 'react';
+import { Axios, Data } from '../../App';
 import Img1 from "./user.jpg";
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import SideBar from '../SideBar';
 
 const Users = () => {
-  const { userData } = useContext(Data);
+  const [products,setProduct]=useState([])
+  useEffect(()=>{
+    // const { userData } = useContext(Data);
+
+ 
+    const fetechProducts= async()=>{
+      const response=await Axios.get("api/admin/users")
+      if(response.status===200){
+setProduct(response.data.data)
+      }
+      
+        }
+  
+fetechProducts()
+},[])
+
+console.log(products,"roti");
+
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
 
   return (
     <div>
-      {userData.length<=0?<h1>No User Found</h1>:<h1>User Details</h1>}
+      {/* {userData.length<=0?<h1>No User Found</h1>:<h1>User Details</h1>} */}
     <div className='d-flex'>
       <div>
         <SideBar />
@@ -23,12 +53,12 @@ const Users = () => {
                 <th scope='col'></th>
                 <th scope='col'>Username</th>
                 <th scope='col'>E-Mail</th>
-                <th scope='col'>Password</th>
+                <th scope='col'>ID</th>
                 
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {userData.map((item) => (
+              {products.map((item) => (
                 <tr key={item.userId}>
 
                 <td>
@@ -41,9 +71,9 @@ const Users = () => {
                       />
                     </div>
                   </td>
-                  <td>{item.userName}</td>
-                  <td>{item.emailId}</td>
-                  <td>{item.password}</td>
+                  <td>{item.username}</td>
+                  <td>{item.email}</td>
+                  <td>{item._id}</td>
                   </tr>
               ))}
             </MDBTableBody>

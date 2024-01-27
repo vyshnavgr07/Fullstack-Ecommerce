@@ -42,23 +42,28 @@ export default function Login() {
       const response=await Axios.post(url,payload)
 
       console.log(response,"resss") 
-       
+
    if(response.status === 200){
 
       
       // email !== adminEmail && localStorage.setItem("userId",response.data.i)
       // email === adminEmail && localStorage.setItem("role","Admin")
-
+if(email !==adminEmail){
 localStorage.setItem("jwt",response.data.Data.token)
 localStorage.setItem("userName",response.data.Data.user.name)
 localStorage.setItem("userId",response.data.Data.user._id)
 localStorage.setItem("email",response.data.Data.user.email)
+}else{
+  localStorage.setItem("jwt",response.data.Data.token)
+  localStorage.setItem("role","role")
+}
 
 
 
 if(email === adminEmail){ 
   navigate('/admin');
   toast.success("Login Success")
+
 }else{
   setTimeout(()=>{
     localStorage.removeItem("jwt")

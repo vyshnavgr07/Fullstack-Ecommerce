@@ -43,7 +43,7 @@ module.exports={
 
     userLogin:async(req,res)=>{
         const {value,error}=joiUserSchema.validate(req.body);
-      console.log(value,"valuee")
+      // console.log(value,"valuee")
 
         if(error){
             res.json(error.message);
@@ -190,7 +190,7 @@ module.exports={
         }
       
         const { productsId } = req.body;
-        console.log(productsId);
+        // console.log(productsId);
       
         if (!productsId ) {
           return res.status(400).send({
@@ -230,7 +230,7 @@ module.exports={
       updateCartItemQuantity: async (req, res) => {
         const userID = req.params.id;  
         const { id, quantityChange } = req.body;
-        console.log(req.body)
+        // console.log(req.body)
         
         const user = await User.findById(userID);
         if (!user) { return res.status(404).json({ message: 'User not found' }) }
@@ -255,7 +255,7 @@ module.exports={
     
         const userId = req.params.id
         const itemId = req.params.itemId
-        console.log("itemId" ,itemId)
+        // console.log("itemId" ,itemId)
         if(!itemId){
           return res.status(404).json({message:"Product Not fount"})
         }

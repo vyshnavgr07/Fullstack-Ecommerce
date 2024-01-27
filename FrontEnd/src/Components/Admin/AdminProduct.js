@@ -1,17 +1,36 @@
-import React, { useContext } from 'react'
-import { Data } from '../../App'
+import React, { useContext, useEffect, useState } from 'react'
+
 import { FaEdit } from "react-icons/fa";
 import { MDBCard, MDBCardBody, MDBCardImage, MDBCol, MDBContainer, MDBIcon, MDBRow, MDBTypography } from 'mdb-react-ui-kit'
 import { useNavigate } from 'react-router-dom';
 import SideBar from '../SideBar';
+import { toast } from 'react-toastify'; 
+import { Axios } from '../../App';
 const AdminProduct = () => {
   const navigate=useNavigate();
-  const {product,setProduct}=useContext(Data);
-  const removeTask=(index)=>{
-    const newTask=[...product]
-     newTask.splice(index,1)
-     setProduct(newTask)
-  }
+  
+  const[product,setProduct]=useState([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response=await Axios.get("api/admin/allproduct")
+        // console.log(response,"rusk");
+        if(response.status === 200) {
+          setProduct(response.data.data)
+        }
+// console.log(product);
+        
+      } catch (error) {
+        console.log(error)
+        toast.error(error.response.data.message)
+      }
+    }
+      fetchProducts()
+  },[])
+
+  
+
 
   return (
     <div  className='d-flex '>
@@ -20,19 +39,19 @@ const AdminProduct = () => {
 
       </div>
 <div>
-<section className="navu h-100" style={{ backgroundColor: "#eee" }}>
+<section className="navu h-100" style={{ backgroundColor: '#eee' }}>
         <MDBContainer className="py-5 h-100">
           <MDBRow className="justify-content-center align-items-center h-100">
             <MDBCol md="10">
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <MDBTypography tag="h3" className="fw-normal mb-0 text-black">
-                 Product List
+                  Shopping Cart
                 </MDBTypography>
                 <div>
                   <p className="mb-0">
                     <span className="text-warning"> </span>
                     <a href="#!" className="text-danger">
-                    <i className="fas fa-angle-down mt-1"></i>
+                       <i className="fas fa-angle-down mt-1"></i> 
                     </a>
                   </p>
                 </div>
@@ -42,37 +61,27 @@ const AdminProduct = () => {
                 <MDBCard key={item.id} className="rounded-3 mb-4">
                   <MDBCardBody className="p-4">
                     <MDBRow className="justify-content-between align-items-center">
-                      <MDBCol md="2" lg="2" xl="2">
-                        <MDBCardImage
-                          className="rounded-3"
-                          fluid
-                          src={item.img}
-                          alt="products"
-                        />
+                      <MDBCol md="12" lg="6" xl="4">
+                        <MDBCardImage className="rounded-3" fluid src={item.image} alt="products" />
                       </MDBCol>
-                      <MDBCol md="3" lg="3" xl="3">
+                      <MDBCol md="12" lg="6" xl="8">
                         <p className="lead fw-normal mb-2">{item.title}</p>
                         <p>
-                          <span className="text-muted">Color:: </span>{item.color} {" "}
-                          <span className="text-muted">company::</span>{item.company}
+                          <span className="text-muted">Descrption: </span>{item.description} <br/>
+                          <span className="text-muted">Color: </span>Grey
                         </p>
                       </MDBCol>
                       
-                     
+                      <MDBCol md="12" lg="6" xl="4">
+                        <MDBTypography tag="h5" className="mb-0">
+                          {item.price}
+                        </MDBTypography>
+                      </MDBCol>
 
-                      <MDBCol md="1" lg="1" xl="1" className="text-end">
-                     <FaEdit   
-                     onClick={()=>navigate(`/editpro/${item.id}`)} />  
-                    </MDBCol>
-                      <MDBCol md="1" lg="1" xl="1" className="text-end">
-                      <a href="#!" className="text-danger">
-                               <MDBIcon
-                               onClick={() => removeTask(product.indexOf(item))}
-                              icon="trash text-danger"
-                                  size="lg"
-                                  
-                                   />
-                                   </a>
+                      <MDBCol md="12" lg="6" xl="4" className="text-end">
+                        <a href="#!" className="text-danger">
+                          <MDBIcon onClick={""} icon="trash text-danger" size="lg" />
+                        </a>
                       </MDBCol>
                     </MDBRow>
                   </MDBCardBody>
