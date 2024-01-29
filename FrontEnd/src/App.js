@@ -28,6 +28,7 @@ import EditPro from './Components/Admin/EditPro';
 
 import axios from "axios";
 import OrderData from './Components/OrderData.js';
+import EditProducts from './Components/Admin/EditProducts.js';
 
 
 export const Axios=axios.create({
@@ -83,8 +84,9 @@ const[loginuser,setloginuser]=useState([]);
         <Route path="/sidebar"    element={<SideBar/>} />
         <Route path="/addproduct"    element={<AddProduct/>} />
         <Route path='/adminmain'        element={<AdminMain/>}/>
-        <Route path='/editpro/:id' element={<EditPro/>}  />
+        <Route path='/adminproduct/editpro/:id' element={<EditPro/>}  />
         <Route path='/orderDetails/:id'element={<OrderData/>}/>
+        
 
       </Routes>
        <Footer/>

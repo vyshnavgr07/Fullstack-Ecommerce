@@ -29,7 +29,31 @@ const AdminProduct = () => {
       fetchProducts()
   },[])
 
+  const handleRemove = async (productId) => {
+    try {
+      await Axios.delete("api/admin/deleteproducts", {
+        data: { productId },
+      });
   
+      setProduct(prevProducts => prevProducts.filter(item => item._id !== productId));
+      toast.success("Product deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      toast.error("Failed to delete product.");
+    }
+  };
+
+
+
+  const handleEdit = (productId) => {
+  
+    navigate(`editpro/${productId}`);
+  };
+
+
+
+
+
 
 
   return (
@@ -45,9 +69,9 @@ const AdminProduct = () => {
             <MDBCol md="10">
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <MDBTypography tag="h3" className="fw-normal mb-0 text-black">
-                  Shopping Cart
+                ALL Products
                 </MDBTypography>
-                <div>
+                <div> 
                   <p className="mb-0">
                     <span className="text-warning"> </span>
                     <a href="#!" className="text-danger">
@@ -57,8 +81,8 @@ const AdminProduct = () => {
                 </div>
               </div>
 
-              {product.map((item) => (
-                <MDBCard key={item.id} className="rounded-3 mb-4">
+              { product  &&  product.map((item) => (
+                <MDBCard key={item._id} className="rounded-3 mb-4">
                   <MDBCardBody className="p-4">
                     <MDBRow className="justify-content-between align-items-center">
                       <MDBCol md="12" lg="6" xl="4">
@@ -74,15 +98,25 @@ const AdminProduct = () => {
                       
                       <MDBCol md="12" lg="6" xl="4">
                         <MDBTypography tag="h5" className="mb-0">
-                          {item.price}
+                          {item.price} 
                         </MDBTypography>
                       </MDBCol>
 
                       <MDBCol md="12" lg="6" xl="4" className="text-end">
+                        <a  className="text-primary">
+                       <MDBIcon onClick={()=>handleEdit(item._id)} icon="pen" size="lg" />
+                         </a>
+                        </MDBCol>
+
+                      <MDBCol md="12" lg="6" xl="4" className="text-end">
                         <a href="#!" className="text-danger">
-                          <MDBIcon onClick={""} icon="trash text-danger" size="lg" />
+                          <MDBIcon onClick={()=>handleRemove(item._id)} icon="trash text-danger" size="lg" />
                         </a>
-                      </MDBCol>
+                      </MDBCol>  
+
+                     
+
+
                     </MDBRow>
                   </MDBCardBody>
                 </MDBCard>

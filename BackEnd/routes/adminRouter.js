@@ -5,7 +5,7 @@ const verifyToken=require("../middleware/adminAuthMiddleware")
 
 const tryCatchMiddleware=require("../middleware/trycatch")
 const imageUpload = require("../middleware/imageUpload/imageUpload")
-const adminController = require("../controller/adminController")
+const adminController = require("../controller/adminController") 
 
 router 
 
@@ -23,6 +23,7 @@ router
 .get("/productbyid/:id",tryCatchMiddleware(adminController.productById))
 .put("/products",tryCatchMiddleware(admin.updateProduct))
 
+.get("/orders",tryCatchMiddleware(admin.orderDtails))
 
 
 

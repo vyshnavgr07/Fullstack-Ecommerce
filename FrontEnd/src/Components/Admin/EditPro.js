@@ -1,126 +1,102 @@
-import React, { useContext, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Data } from '../../App';
-import 'react-toastify/dist/ReactToastify.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Axios } from '../../App';
 import { toast } from 'react-toastify';
-
+console.log("editProductsssssssssssss");
 const EditPro = () => {
   const { id } = useParams();
-  const titleRef = useRef(null);
-  const stockRef = useRef(null);
-  const priceRef = useRef(null);
+  const navigate = useNavigate();
 
-  const { product, setProduct} = useContext(Data);
-  const findval = product.find((item) => item.id === parseInt(id));
-
-  const [formData, setFormData] = useState({
-    title: findval.title,
-    stock: findval.stock,
-    price: findval.newPrice,
+  const [productData, setProductData] = useState({
+    title: '',
+    category: '',
+    price: '',
+    description: '',
+    image: '',
+    gender: '', // Added gender
   });
 
-  const handleSave = () => {
-   
-    const updatedTitle = titleRef.current.value;
-    const updatedStock = stockRef.current.value;
-    const updatedPrice = priceRef.current.value;
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const response = await Axios.get(`api/users/products/${id}`);
+ 
+        if (response.status === 200) {
+          
+          const { _id, title, description, price, image, category, gender } = response.data.data;
 
-   
-    if (!updatedTitle.trim() || !updatedStock.trim() || !updatedPrice.trim()) {
-      
-      toast.error("Please fill in all fields");
-      return;
+          setProductData({ id: _id, title, description, price, image, category, gender });
+        }
+      } catch (error) {
+        console.error('Error fetching product data:', error);
+      }
+    };
+
+    fetchProductData();
+  }, [id]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // Update the productData state when any input field changes
+    setProductData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await Axios.put(`api/admin/products/`, productData);
+     
+      if (response.status === 200) {
+        toast.success('Product edited successfully');
+        navigate(`/adminproduct`);
+      }
+    } catch (error) {
+      console.error('Error editing product:', error);
+      toast.error('Failed to edit product.');
     }
-
-  
-    setFormData({
-      title: updatedTitle,
-      stock: updatedStock,
-      price: updatedPrice,
-    });
-
-   
-    const updatedProduct = product.map((item) =>
-      item.id === parseInt(id)
-        ? {
-            ...item,
-            title: updatedTitle,
-            stock: updatedStock,
-            newPrice: updatedPrice,
-          }
-        : item
-    );
-
-    setProduct(updatedProduct);
-  //   const updatedCart = cart.map((item) =>
-  //     item.id === parseInt(id)
-  //       ? {
-  //           ...item,
-  //           title: updatedTitle,
-  //           stock: updatedStock,
-  //           newPrice: updatedPrice,
-  //         }
-  //       : item
-  //   );
-  //  setcart(updatedCart)
-    toast.success("Product updated");
   };
 
   return (
-    <div style={{ width: '100%', height: '40vh' }}>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">
-              <b>Title</b>
-            </th>
-            <th scope="col">
-              <b> Price</b>
-            </th>
-            <th scope="col">
-              <b>Stock</b>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr key={findval.id}>
-            <td>
-              {' '}
-              <input
-                type="text"
-                ref={titleRef}
-                defaultValue={formData.title}
-              />{' '}
-            </td>
-            <td>
-              <input
-                type="number"
-                ref={priceRef}
-                defaultValue={formData.price}
-              />
-            </td>
-            <td>
-              <input
-                type="number"
-                ref={stockRef}
-                defaultValue={formData.stock}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button
-        type="button"
-        className="btn btn-success m-2 mt-5"
-        onClick={handleSave}
-      >
-        Save
-      </button>
-      <button type="button" className="btn btn-danger m-2 mt-5">
-        Discard
-      </button>
-    </div>
+<> 
+
+
+    <section>
+      <div className="container mt-5">
+        <div className="row">
+          <div className="col-md-6">
+            <h2 className="text-center">Edit Product</h2>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <label htmlFor="title">Title</label>
+              <input type="text" name="title" className="form-control" value={productData.title} onChange={handleChange} />
+
+              <label htmlFor="category">Category</label>
+              <input type="text" name="category" className="form-control" value={productData.category} onChange={handleChange} />
+
+              <label htmlFor="price">Price</label>
+              <input type="text" name="price" className="form-control" value={productData.price} onChange={handleChange} />
+
+              <label htmlFor="description">Description</label>
+              <input type="text" name="description" className="form-control" value={productData.description} onChange={handleChange} />
+
+              <label htmlFor="image">Image</label>
+              <input type="text" name="image" className="form-control" value={productData.image} onChange={handleChange} />
+
+              <label htmlFor="gender">Gender</label>
+              <input type="text" name="gender" className="form-control" value={productData.gender} onChange={handleChange} />
+
+              <button type="submit" className="btn btn-success mt-4">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+  </section>
+  </>
   );
 };
 

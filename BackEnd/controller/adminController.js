@@ -44,7 +44,7 @@ module.exports=     {
           );  
           return res.status(200).send({
             statu: "Succes",
-            message: "Admin registratin succs full",
+            message: "Admin registratin succesfull",
             Data:{token},
            
           });
@@ -226,7 +226,22 @@ updateProduct:async(req,res)=>{
             status:"Success",
             message:"product updated succesfully"
         });
-}
+},
+
+orderDtails: async (req, res) => {
+    const products = await order.find();
+    if (products.length === 0) {
+      return res.status(200).json({
+        message: "No products ",
+      }); 
+    }
+    res.status(200).json({
+      status: "Success",
+      message: "Successfully fetched order details",
+      products,
+    });
+  }
+  
 
 
 

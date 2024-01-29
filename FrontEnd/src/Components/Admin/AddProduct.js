@@ -1,128 +1,152 @@
-import React, { useContext, useRef } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Data } from '../../App';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import SideBar from '../SideBar';
+import SideBar from "../SideBar";
 
 const AddProduct = () => {
-  let id = 28;
   const navigate = useNavigate();
-  const { product, setProduct } = useContext(Data);
-  const quantityRef = useRef(null);
-  const titleRef = useRef(null);
-  const priceRef = useRef(null);
-  const imageUrlRef = useRef(null);
-  const categoryRef = useRef(null);
-  const companyRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [image, setImage] = useState(null);
+  const [category, setCategory] = useState("");  // Reordered category
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newPrice = parseFloat(priceRef.current.value);
-    const quantity = parseInt(quantityRef.current.value, 10);
-
-    if (isNaN(newPrice) || isNaN(quantity)) {
-      toast.error("Invalid price or quantity");
+    if (!title || !category || !price || !description || !image) {
+      toast.error("Please fill in all fields.");
       return;
     }
 
-    const newProduct = {
-      id: id + 1,
-      title: titleRef.current.value,
-      newPrice,
-      img: imageUrlRef.current.value,
-      gender: categoryRef.current.value,
-      company: companyRef.current.value,
-    };
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("image", image);
+    formData.append("category", category); // Reordered category
+    console.log("img", image);
 
-    const newTask = [...product, newProduct];
-    setProduct(newTask);
-    navigate("/main");
-    toast.success("Product Added successfully");
+    try {
+      const jwtToken = localStorage.getItem('jwt');
+      const response = await axios.post(
+        "http://localhost:4000/api/admin/products",
+        formData,
+        {
+          headers: {
+            Authorization: jwtToken,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      console.log(response,"qwertyui");
+
+      if (response.status === 201) {
+        toast.success("Product added successfully!");
+        navigate("/adminproduct");
+      } else {
+        toast.error("Failed to add product.");
+      }
+    } catch (error) {
+      console.error("Error uploading product:", error);
+    }
   };
 
   return (
-<div className='d-flex'>
-
-<div>
-  <SideBar/>
-</div>
-
-
-
-
-<div className="container mt-5">
-      <div className="card">
-        <div className="card-header bg-primary text-white">
-          <h2 className="mb-0">Add a Product</h2>
-        </div>
-        <div className="card-body">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="title" className="form-label">
-                Title:
-              </label>
-              <input type="text" id="title" ref={titleRef} className="form-control" required />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="price" className="form-label">
-                Price:
-              </label>
-              <input type="number" id="price" ref={priceRef} className="form-control" required />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="imageUrl" className="form-label">
-                Image URL:
-              </label>
-              <input type="text" id="imageUrl" ref={imageUrlRef} className="form-control" required />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="category" className="form-label">
-                Gender:
-              </label>
-              <input type="text" id="category" ref={categoryRef} className="form-control" required />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="company" className="form-label">
-                Company:
-              </label>
-              <input type="text" id="company" ref={companyRef} className="form-control" required />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="quantity" className="form-label">
-                Qty:
-              </label>
-              <input type="number" id="quantity" ref={quantityRef} className="form-control" required />
-            </div>
-
-            <button type="submit" className="btn btn-primary">
-              Add Product
-            </button>
-          </form>
+    <div className='d-flex'>
+    <div className='flex-shrink-0'>
+      <SideBar/>
+    </div>
+    <section className='flex-grow-1'>
+      <div className="container mt-5">
+        <div className="row">
+          <div className="col-md-6 mx-auto">
+            <h2 className="text-center">Add Product</h2>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  className="form-control"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+  
+              <div className="mb-3">
+                <label htmlFor="description" className="form-label">
+                  Description
+                </label>
+                <input
+                  type="text"
+                  name="description"
+                  className="form-control"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+  
+              <div className="mb-3">
+                <label htmlFor="price" className="form-label">
+                  Price
+                </label>
+                <input
+                  type="text"
+                  name="price"
+                  className="form-control"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
+  
+              <div className="mb-3">
+                <label htmlFor="image" className="form-label">
+                  Image-1
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="image"
+                  className="form-control"
+                  onChange={handleImageChange}
+                  placeholder="img-1"
+                />
+              </div>
+  
+              <div className="mb-3">
+                <label htmlFor="type" className="form-label">
+                  Category
+                </label>
+                <input
+                  type="text"
+                  name="category"
+                  className="form-control"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                />
+              </div>
+  
+              <button type="submit" className="btn btn-success mt-2 mb-5">
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-   
+    </section>
+  </div>
+  
   );
-};
+}
 
 export default AddProduct;
