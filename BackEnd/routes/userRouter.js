@@ -10,9 +10,10 @@ router
 .post("/register",tryCatchMiddleware(userControler.userRegister)) 
 .post("/userlogin",tryCatchMiddleware(userControler.userLogin))  
 
-.get("/viewProduct",tryCatchMiddleware(userControler.viewProduct))   
-.get("/products/:id",tryCatchMiddleware(userControler.productById))
+.get("/viewProduct",tryCatchMiddleware(userControler.viewProduct))  
 .use(verifyToken)
+.get("/products/:id",tryCatchMiddleware(userControler.productById))
+
 .post("/:id/addCart",tryCatchMiddleware(userControler.addToCart))
 .get("/:id/viewCart",tryCatchMiddleware(userControler.viewCartProduct))
 .put("/:id/cart",tryCatchMiddleware(userControler.updateCartItemQuantity))

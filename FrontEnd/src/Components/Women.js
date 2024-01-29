@@ -33,7 +33,7 @@ fetchProduct()
 
 
 
-  const Wproduct = Products.filter((item) => item.gender === 'women'); 
+  const Wproduct = Products.filter((item) => item.category === 'women'); 
   console.log(Wproduct);
 
   return (
@@ -48,7 +48,7 @@ fetchProduct()
                 <h2>
                   RS {item.price}
                 </h2>
-                <h2>RS {item.newPrice}</h2>
+                
               </Card.Text>
               <Button onClick={() => navigate(`/viewproducts/${item.id}`)} variant='primary'>
                 View Products

@@ -41,7 +41,7 @@ export default function Alloders() {
             <th scope='col'>Product ID</th>
             <th scope='col'>Date</th>
             <th scope='col'>Time</th>
-            <th scope='col'>OrderId</th>
+            {/* <th scope='col'>OrderId</th> */}
             <th scope='col'>PaymentId</th>
             <th scope='col'>Total</th>
            

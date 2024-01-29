@@ -13,7 +13,7 @@ useEffect(()=>{
     const fetchProducts=async()=>{
         try {
             const response=await Axios.get('api/users/viewProduct')
-            // console.log(response,"asdfghjk");
+            console.log(response,"asdfghjk");
             if(response.status===200){
                 toast.success("product fetched succesfully");
                 setProducts(response.data.data)
@@ -29,7 +29,7 @@ useEffect(()=>{
 
 
     
-    const MenProduct=products.filter((item)=>item.gender==="men")
+    const MenProduct=products.filter((item)=>item.category ==="MEN")
 
     // console.log(MenProduct,"this is menpro");
     return (
@@ -44,8 +44,8 @@ useEffect(()=>{
                     <Card.Body>
                         <Card.Title  className='m-2'>{item.title}</Card.Title>
                         <Card.Text>
-                        <h2> <del>RS {item.price}</del> </h2>
-                        <h2>RS {item.newPrice}</h2>
+                        <h2> RS {item.price} </h2>
+                       
                       
                         </Card.Text>
                         <Button  onClick={()=>navigate(`/viewproducts/${item._id}`)}  variant="primary">viewproducts</Button>

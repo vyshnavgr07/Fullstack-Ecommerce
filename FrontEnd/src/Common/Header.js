@@ -57,10 +57,10 @@ const carticon = () => {
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          {/* <GiHamburgerMenu /> */}
+          
 
           <Navbar.Collapse id="responsive-navbar-nav"  >
-          {/* <GiHamburgerMenu /> */}
+         
 
           {/* <span className="navbar-toggler-icon" style={{ backgroundColor: 'black' }}></span> */}
             <Nav className="me-auto my-2 my-lg-0 fw-bold" style={{ maxHeight: '100px' }} navbarScroll variant="black">
@@ -84,7 +84,7 @@ const carticon = () => {
                
             
           <BsCartFill style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={carticon} />
-             <MdAdminPanelSettings style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={() => navigate('/adminlogin')} />
+
              <AiFillCalendar  style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={() => navigate(`/orderDetails/${id}`)} />
              </Nav>
           </Navbar.Collapse>

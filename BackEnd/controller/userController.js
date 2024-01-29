@@ -596,15 +596,17 @@ orderDetails: async (req, res) => {
     }
 
     const ordersWithProducts = await Order.find({ _id: { $in: orderProducts } })
-      .populate('products');
-
+    .populate('products'); 
+  
+    console.log(ordersWithProducts,"qqqqqqqqq");
+ 
     res.status(200).json({
-      message: 'Ordered Products Details Found',
+      message: 'Ordered Products Details Found', 
       data: ordersWithProducts,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
+    res.status(500).json({ 
       status: 'failure',
       message: 'Internal Server Error',
     });
