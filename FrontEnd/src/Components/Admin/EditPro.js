@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Axios } from '../../App';
 import { toast } from 'react-toastify';
+import SideBar from '../SideBar';
 console.log("editProductsssssssssssss");
 const EditPro = () => {
   const { id } = useParams();
@@ -61,42 +62,49 @@ const EditPro = () => {
   };
 
   return (
-<> 
 
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-3">
+          <SideBar />
+        </div>
+        <div className="col-md-9">
+          <section className="mt-5">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-6 mx-auto">
+                  <h2 className="text-center">Edit Product</h2>
+                  <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <label htmlFor="title">Title</label>
+                    <input type="text" name="title" className="form-control" value={productData.title} onChange={handleChange} />
 
-    <section>
-      <div className="container mt-5">
-        <div className="row">
-          <div className="col-md-6">
-            <h2 className="text-center">Edit Product</h2>
-            <form onSubmit={handleSubmit} encType="multipart/form-data">
-              <label htmlFor="title">Title</label>
-              <input type="text" name="title" className="form-control" value={productData.title} onChange={handleChange} />
+                    <label htmlFor="category">Category</label>
+                    <input type="text" name="category" className="form-control" value={productData.category} onChange={handleChange} />
 
-              <label htmlFor="category">Category</label>
-              <input type="text" name="category" className="form-control" value={productData.category} onChange={handleChange} />
+                    <label htmlFor="price">Price</label>
+                    <input type="text" name="price" className="form-control" value={productData.price} onChange={handleChange} />
 
-              <label htmlFor="price">Price</label>
-              <input type="text" name="price" className="form-control" value={productData.price} onChange={handleChange} />
+                    <label htmlFor="description">Description</label>
+                    <input type="text" name="description" className="form-control" value={productData.description} onChange={handleChange} />
 
-              <label htmlFor="description">Description</label>
-              <input type="text" name="description" className="form-control" value={productData.description} onChange={handleChange} />
+                    <label htmlFor="image">Image</label>
+                    <input type="text" name="image" className="form-control" value={productData.image} onChange={handleChange} />
 
-              <label htmlFor="image">Image</label>
-              <input type="text" name="image" className="form-control" value={productData.image} onChange={handleChange} />
+                    <label htmlFor="gender">Gender</label>
+                    <input type="text" name="gender" className="form-control" value={productData.gender} onChange={handleChange} />
 
-              <label htmlFor="gender">Gender</label>
-              <input type="text" name="gender" className="form-control" value={productData.gender} onChange={handleChange} />
-
-              <button type="submit" className="btn btn-success mt-4">
-                Submit
-              </button>
-            </form>
-          </div>
+                    <button type="submit" className="btn btn-success mt-4">
+                      Submit
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
-  </section>
-  </>
+    </div>
+
   );
 };
 

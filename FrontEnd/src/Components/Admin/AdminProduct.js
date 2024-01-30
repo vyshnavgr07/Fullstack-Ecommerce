@@ -57,78 +57,71 @@ const AdminProduct = () => {
 
 
   return (
-    <div  className='d-flex '>
-      <div>
-<SideBar/>
-
+<div className='d-flex'>
+      <div className="col-md-3">
+        <SideBar />
       </div>
-<div>
-<section className="navu h-100" style={{ backgroundColor: '#eee' }}>
-        <MDBContainer className="py-5 h-100">
-          <MDBRow className="justify-content-center align-items-center h-100">
-            <MDBCol md="10">
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <MDBTypography tag="h3" className="fw-normal mb-0 text-black">
-                ALL Products
-                </MDBTypography>
-                <div> 
-                  <p className="mb-0">
-                    <span className="text-warning"> </span>
-                    <a href="#!" className="text-danger">
-                       <i className="fas fa-angle-down mt-1"></i> 
-                    </a>
-                  </p>
+
+      <div>
+        <section className="navu h-100" style={{ backgroundColor: '#eee' }}>
+          <MDBContainer className="py-5 h-100">
+            <MDBRow className="justify-content-center align-items-center h-100">
+              <MDBCol md="10">
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <MDBTypography tag="h3" className="fw-normal mb-0 text-black">
+                    ALL Products
+                  </MDBTypography>
+                  <div>
+                    <p className="mb-0">
+                      <span className="text-warning"> </span>
+                      <a href="#!" className="text-danger">
+                        <i className="fas fa-angle-down mt-1"></i>
+                      </a>
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              { product  &&  product.map((item) => (
-                <MDBCard key={item._id} className="rounded-3 mb-4">
-                  <MDBCardBody className="p-4">
-                    <MDBRow className="justify-content-between align-items-center">
-                      <MDBCol md="12" lg="6" xl="4">
-                        <MDBCardImage className="rounded-3" fluid src={item.image} alt="products" />
-                      </MDBCol>
-                      <MDBCol md="12" lg="6" xl="8">
-                        <p className="lead fw-normal mb-2">{item.title}</p>
-                        <p>
-                          <span className="text-muted">Descrption: </span>{item.description} <br/>
-                          <span className="text-muted">Color: </span>Grey
-                        </p>
-                      </MDBCol>
-                      
-                      <MDBCol md="12" lg="6" xl="4">
-                        <MDBTypography tag="h5" className="mb-0">
-                          {item.price} 
-                        </MDBTypography>
-                      </MDBCol>
-
-                      <MDBCol md="12" lg="6" xl="4" className="text-end">
-                        <a  className="text-primary">
-                       <MDBIcon onClick={()=>handleEdit(item._id)} icon="pen" size="lg" />
-                         </a>
+                {product && product.map((item) => (
+                  <MDBCard key={item._id} className="rounded-3 mb-4">
+                    <MDBCardBody className="p-4">
+                      <MDBRow className="justify-content-between align-items-center">
+                        <MDBCol md="12" lg="6" xl="4">
+                          <MDBCardImage className="rounded-3" fluid src={item.image} alt="products" />
+                        </MDBCol>
+                        <MDBCol md="12" lg="6" xl="8">
+                          <p className="lead fw-normal mb-2">{item.title}</p>
+                          <p>
+                            <span className="text-muted">Descrption: </span>{item.description} <br />
+                            <span className="text-muted">Color: </span>Grey
+                          </p>
                         </MDBCol>
 
-                      <MDBCol md="12" lg="6" xl="4" className="text-end">
-                        <a href="#!" className="text-danger">
-                          <MDBIcon onClick={()=>handleRemove(item._id)} icon="trash text-danger" size="lg" />
-                        </a>
-                      </MDBCol>  
+                        <MDBCol md="12" lg="6" xl="4">
+                          <MDBTypography tag="h5" className="mb-0">
+                            {item.price}
+                          </MDBTypography>
+                        </MDBCol>
 
-                     
+                        <MDBCol md="12" lg="6" xl="4" className="text-end">
+                          <a className="text-primary">
+                            <MDBIcon onClick={() => handleEdit(item._id)} icon="pen" size="lg" />
+                          </a>
+                        </MDBCol>
 
-
-                    </MDBRow>
-                  </MDBCardBody>
-                </MDBCard>
-              ))}
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-      </section>
-
-</div>
-
-    
+                        <MDBCol md="12" lg="6" xl="4" className="text-end">
+                          <a href="#!" className="text-danger">
+                            <MDBIcon onClick={() => handleRemove(item._id)} icon="trash text-danger" size="lg" />
+                          </a>
+                        </MDBCol>
+                      </MDBRow>
+                    </MDBCardBody>
+                  </MDBCard>
+                ))}
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </section>
+      </div>
     </div>
   )
 }

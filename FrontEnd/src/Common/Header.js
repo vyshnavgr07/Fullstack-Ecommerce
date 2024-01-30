@@ -1,49 +1,36 @@
 import React, { useContext } from 'react';
-import { Navbar, Nav, Container} from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { BsCartFill } from 'react-icons/bs';
 import { AiFillCalendar } from "react-icons/ai";
-import { MdAdminPanelSettings } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import { Data } from '../App';
-import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
-import "./Header.css"
+import "./Header.css";
 
 const Header = () => {
   const navigate = useNavigate();
-  // const { login, setLogin, userData} = useContext(Data);
-const id=localStorage.getItem("userId")
-
-
+  const jwtToken = localStorage.getItem("jwt");
+  const id = localStorage.getItem("userId");
 
   const logout = () => {
-    localStorage.removeItem("userId")
-    localStorage.removeItem("userName")
-    localStorage.removeItem("role")
-    localStorage.removeItem("jwt")
-    localStorage.removeItem("email")
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("role");
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("email");
 
     navigate('/');
-    
     toast.error('You have logged out');
   };
 
-
-
-
-const carticon = () => {
-     
-      navigate('/cart');
-   
+  const carticon = () => {
+    navigate('/cart');
   };
 
   const logoStyles = {
     display: 'flex',
     alignItems: 'center',
   };
-
- 
 
   return (
     <div>
@@ -57,36 +44,28 @@ const carticon = () => {
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          
 
-          <Navbar.Collapse id="responsive-navbar-nav"  >
-         
-
-          {/* <span className="navbar-toggler-icon" style={{ backgroundColor: 'black' }}></span> */}
+          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto my-2 my-lg-0 fw-bold" style={{ maxHeight: '100px' }} navbarScroll variant="black">
-            
               <Nav.Link onClick={() => navigate('/main')}>All Category</Nav.Link>
               <Nav.Link onClick={() => navigate('/men')}>MEN</Nav.Link>
               <Nav.Link onClick={() => navigate('/women')}>WOMEN</Nav.Link>
-              
             </Nav>
 
             <Nav className="d-flex my-3 nav-left  fw-bold" navbarScroll>
-              
-                <Nav.Link className="text" onClick={() => navigate('/login')}>
-                  Login
-                </Nav.Link>
-
+              {jwtToken ? (
                 <Nav.Link className="text-danger" onClick={logout}>
                   LogOut
                 </Nav.Link>
-              
-               
-            
-          <BsCartFill style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={carticon} />
+              ) : (
+                <Nav.Link className="text" onClick={() => navigate('/login')}>
+                  Login
+                </Nav.Link>
+              )}
+            </Nav>
 
-             <AiFillCalendar  style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={() => navigate(`/orderDetails/${id}`)} />
-             </Nav>
+            <BsCartFill style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={carticon} />
+            <AiFillCalendar style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={() => navigate(`/orderDetails/${id}`)} />
           </Navbar.Collapse>
         </Container>
       </Navbar>

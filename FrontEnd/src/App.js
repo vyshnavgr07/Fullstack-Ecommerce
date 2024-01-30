@@ -28,7 +28,7 @@ import EditPro from './Components/Admin/EditPro';
 
 import axios from "axios";
 import OrderData from './Components/OrderData.js';
-import EditProducts from './Components/Admin/EditProducts.js';
+
 
 
 export const Axios=axios.create({
