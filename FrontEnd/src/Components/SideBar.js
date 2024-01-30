@@ -19,7 +19,7 @@ const SideBar = () => {
       <CDBSidebar  textColor="#fff" backgroundColor="#2C3539">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <NavLink
-            to="/adminpage"
+            to="/adminpage"   
             className="text-decoration-none"
             style={{ color: "inherit" }}
           >

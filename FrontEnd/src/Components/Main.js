@@ -70,7 +70,7 @@ const handleViewProduct=(id)=>{
   
 </div>
  <Row className="justify-content-center m-4">
-      {products.map((item) => (
+      { products.map((item) => (
         <Col key={item._id} xs={12} sm={6} md={4} lg={3} xl={3} className="mb-4">
           <Card style={{ width: '17rem' }}>
             <Card.Img style={{ width: '15rem', height: '10rem' }} variant="top" src={item.image} alt='Loading...' />

@@ -180,8 +180,9 @@ module.exports={
        //add to cart 
        addToCart: async (req, res) => {
         const userId = req.params.id;
-        const user = await User.findById(userId);
       
+        const user = await User.findById(userId);
+   
         if (!user) {
           return res.status(404).send({
             status: "failed",
@@ -190,6 +191,7 @@ module.exports={
         }
       
         const { productsId } = req.body;
+        
         
       
         if (!productsId ) {
@@ -204,11 +206,13 @@ module.exports={
         if (!product) {
           return res.status(404).send({
             status: "failed",
-            message: "Product not found",
+            message: "Product not found",   
           });
         }
 
         const isProductInCart = user.cart.some(item => item.productsId.equals(productsId));
+
+       
   
         if (isProductInCart) {
           return res.status(400).send({
@@ -257,7 +261,7 @@ module.exports={
         const itemId = req.params.itemId
         
         if(!itemId){
-          return res.status(404).json({message:"Product Not fount"})
+          return res.status(404).json({message:"Product Not found"})
         }
     
         const user = await User.findById(userId)

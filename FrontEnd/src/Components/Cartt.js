@@ -10,20 +10,25 @@ const Cartt = () => {
   const { setcart, setvieworder } = useContext(Data);
   const [product,setProduct]=useState([])
   const userId=localStorage.getItem("userId")
-  // console.log(userId,"loooggggerr");
+  
   const navigate = useNavigate();                                                               
   const [cartuser,setcartuser]=useState([]);
-  const {id}=useParams()
+ 
+
+
+
+
+
 
 
   const fetchCart=async()=>{
     try{
       const response=await Axios.get(`api/users/${userId}/viewCart`) 
-      
+     
       if(response.status ===200){
         setProduct(response.data.data)
-        console.log(response);
-            //  console.log(product,"c art");
+        
+            
       }
     } catch(error){
       console.log(error);
@@ -50,6 +55,26 @@ const handleQuantity = async (cartID, quantityChange) => {
      toast.error(error); 
   }
 };
+
+const handleRemoveItem = async (itemId) => {
+ console.log(itemId,"myraa");
+ try {
+    const response = await Axios.delete(`/api/users/${userId}/cart/${itemId}`);
+    if (response.status === 200) {
+      toast.success(response.data.message)
+       return fetchCart()
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error('Error removing product from the cart');
+  
+  }
+};
+
+
+
+
+
 
 const handleChekout = async () => {
   try {
@@ -83,19 +108,19 @@ const calculateTotal = (cartItems) => {
                 <div>
                   <p className="mb-0">
                     <span className="text-warning"> </span>
-                    <a href="#!" className="text-danger">
+                    <a  className="text-danger">
                        <i className="fas fa-angle-down mt-1"></i> 
                     </a>
                   </p>
                 </div>
               </div>
 
-              {product.map((item) => (
+              {product  && product.map((item) => (
                 <MDBCard key={item.id} className="rounded-3 mb-4">
                   <MDBCardBody className="p-4">
                     <MDBRow className="justify-content-between align-items-center">
                       <MDBCol md="12" lg="6" xl="4">
-                        <MDBCardImage className="rounded-3" fluid src={item.productsId.image} alt="products" />
+                        <MDBCardImage className="rounded-3" fluid src={item.productsId?.image} alt="products" />
                       </MDBCol>
                       <MDBCol md="12" lg="6" xl="8">
                         <p className="lead fw-normal mb-2">{item.productsId.title}</p>
@@ -121,8 +146,8 @@ const calculateTotal = (cartItems) => {
                       </MDBCol>
 
                       <MDBCol md="12" lg="6" xl="4" className="text-end">
-                        <a href="#!" className="text-danger">
-                          <MDBIcon onClick={""} icon="trash text-danger" size="lg" />
+                        <a  className="text-danger">
+                          <MDBIcon onClick={()=>handleRemoveItem(item.productsId._id)} icon="trash text-danger" size="lg" />
                         </a>
                       </MDBCol>
                     </MDBRow>

@@ -16,8 +16,9 @@ const Viewproducts = () => {
   const { login, loginuser } = useContext(Data);
   const[addcart,setaddcart]=useState([])
   const userId=localStorage.getItem("userId")
+ console.log(userId,"usrusrusr");
   const {id} = useParams(); 
-  console.log(id,"thisss is my isddddd");
+ 
 
   // const {id} = useParams(); 
   // console.log(id,"thisss is my isddddd");
@@ -26,7 +27,8 @@ const Viewproducts = () => {
     const fetchedData = async () => {
      
       try {
-        const response = await Axios.get(`api/users/products/${id}`); 
+        const response = await Axios.get(`api/users/products/${id}`);
+        
         if (response.status === 200) {
           toast.success("product fetched succesfully", {
             toastId: 'success1',
@@ -43,8 +45,10 @@ const Viewproducts = () => {
 
  
   const handleAddToCart = async (id) => {  
+
     try {
-      const response = await Axios.post(`api/users/${userId}/addCart`, {productsId: id});
+      const response = await Axios.post(`api/users/${userId}/addCart`,{productsId:id});
+      console.log(response,"repopop");
     
       if (response && response.data && response.data.status === "success") {
         toast.success('Product successfully added to the cart');

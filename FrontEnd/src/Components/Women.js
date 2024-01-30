@@ -36,12 +36,19 @@ fetchProduct()
 
 
   const Wproduct = Products.filter((item) => item.category === 'women'); 
-  console.log(Wproduct);
+
+
+  const viewhandle=(id)=>{
+    console.log(id,"kund");
+    navigate(`/viewproducts/${id}`)
+  }
 
   return (
     <Row className='m-4'>
+      {console.log(Wproduct,"woooo")}
       {Wproduct.map((item) => (
-        <Col key={item.id} xs={12} sm={6} md={4} lg={3} xl={3} className='mb-4'>
+        
+        <Col key={item._id} xs={12} sm={6} md={4} lg={3} xl={3} className='mb-4'>
           <Card className='' style={{ width: '18rem' }}>
             <Card.Img style={{ width: '15rem', height: '10rem' }} variant='top' src={item.image} />
             <Card.Body>
@@ -52,8 +59,9 @@ fetchProduct()
                 </h2>
                 <h4 className='text-danger'>{item.description}</h4>
               </Card.Text>
-              <Button onClick={() => navigate(`/viewproducts/${item.id}`)} variant='primary'>
+              <Button onClick={() =>viewhandle(item._Id)} variant='primary'>
                 View Products
+                {console.log(item._id,"wewee")}
               </Button>
             </Card.Body>
           </Card>

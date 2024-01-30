@@ -31,7 +31,7 @@ app.use(bodyParser.json())
 app.use(express.json())
 
 app.use("/api/users",userRouter)
-app.use("/api/admin",adminRouter)
+app.use("/api/admin",adminRouter) 
 
 
 
