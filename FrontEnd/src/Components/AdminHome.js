@@ -1,14 +1,48 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SideBar from './SideBar'
 import Card from 'react-bootstrap/Card';
-import { Data } from '../App';
+import { Axios, Data } from '../App';
 import { useNavigate } from 'react-router-dom';
 
 
 
 const AdminHome = () => {
   const{userData,vieworder} =useContext(Data);
+  const[user,setuser]=useState([])
+  const [order,setOrder]=useState([])
 const navigate=useNavigate();
+
+useEffect(()=>{
+  // const { userData } = useContext(Data);
+  const fetechProducts= async()=>{
+    const response=await Axios.get("api/admin/users")
+    if(response.status===200){
+      setuser(response.data.data)
+    }
+    
+      }
+
+fetechProducts()
+},[])
+
+useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+      const response = await Axios.get(`api/admin/orders`)
+      if(response.status === 200){
+        setOrder(response.data.products)
+      }
+    } catch (error) {
+      
+    }
+  }
+  fetchOrders()
+},[])
+
+
+
+
+
   return (
     <div className='d-flex bg-secondary w-100'>
   <div>
@@ -26,7 +60,7 @@ const navigate=useNavigate();
           <Card.Body>
             <Card.Title> USERS </Card.Title>
             <Card.Text>
-       <h1>  {userData.length} </h1>
+       <h1>  {user.length} </h1>
             </Card.Text>
           </Card.Body>
         </Card>
@@ -42,7 +76,7 @@ const navigate=useNavigate();
           <Card.Body>
             <Card.Title> ORDERS </Card.Title>
             <Card.Text>
-       <h1>     {vieworder.length} </h1> 
+       <h1>     {order.length} </h1> 
             </Card.Text>
           </Card.Body>
         </Card>

@@ -43,7 +43,7 @@ module.exports={
 
     userLogin:async(req,res)=>{
         const {value,error}=joiUserSchema.validate(req.body);
-      // console.log(value,"valuee")
+     
 
         if(error){
             res.json(error.message);
@@ -53,7 +53,7 @@ module.exports={
         const user=await User.findOne({
             email:email,
         });  
-        // console.log(user,"jjj") 
+       
         const id=user._id
         const username=user. username
        
@@ -190,7 +190,7 @@ module.exports={
         }
       
         const { productsId } = req.body;
-        // console.log(productsId);
+        
       
         if (!productsId ) {
           return res.status(400).send({
@@ -230,7 +230,7 @@ module.exports={
       updateCartItemQuantity: async (req, res) => {
         const userID = req.params.id;  
         const { id, quantityChange } = req.body;
-        // console.log(req.body)
+        console.log(req.body,"reqqq")
         
         const user = await User.findById(userID);
         if (!user) { return res.status(404).json({ message: 'User not found' }) }
@@ -255,7 +255,7 @@ module.exports={
     
         const userId = req.params.id
         const itemId = req.params.itemId
-        // console.log("itemId" ,itemId)
+        
         if(!itemId){
           return res.status(404).json({message:"Product Not fount"})
         }
@@ -339,7 +339,7 @@ addwishlist:async(req,res)=>{
      const {productId}=req.body;
      const user= await User.findById(userId);
 
-    //  console.log(prod,"this is prod");
+ 
 
     if (!user){ 
         return res.status(404).json({
@@ -349,7 +349,7 @@ addwishlist:async(req,res)=>{
     }
 
     const findprod = await User.findOne({ _id: userId, wishlist: productId });
-    // console.log(findprod,"this is the product");  
+     
     if (findprod) {
         return res.status(404).json({
             status: "failure",
@@ -420,7 +420,6 @@ delete:async(req,res)=>{
 payment:async(req,res)=>{
     const userId=req.params.id;
     const user = await User.findOne({_id: userId }).populate("cart.productsId");
-    // console.log("uuu",user)
     if(!user){
         return res.status(404).json({
             message:"User Not found"  
@@ -434,7 +433,6 @@ payment:async(req,res)=>{
     }
  
     const lineItems=cartProducts.map((item)=>{
-      // console.log(item.productsId.price,"pprr");
       const unit_amount = Math.round(item.productsId.price * 100);
         return{ 
             price_data:{
@@ -448,7 +446,6 @@ payment:async(req,res)=>{
             quantity:item.quantity, 
         };
     });
-    // console.log('iii',lineItems) 
 
        let  session = await stripe.checkout.sessions.create({  
         payment_method_types: ["card"],
@@ -458,7 +455,6 @@ payment:async(req,res)=>{
  
       });
 
-    console.log("sessionnn",session)
     if(!session){ 
         return res.json({
             status:"Failure",
@@ -470,7 +466,6 @@ payment:async(req,res)=>{
         user,
         session,
     };  
-    // console.log('svalueee',sValue) 
     
     res.status(200).json({
         status: "Success",
@@ -485,7 +480,6 @@ success: async (req, res) => {
       const { id, user, session } = sValue;
       console.log(session,"ussssssssssss");
       const userId = user._id;
-      // console.log(userId,"zzzzzzzzzzz");
       const cartItems = user.cart;
   
      
@@ -598,7 +592,6 @@ orderDetails: async (req, res) => {
     const ordersWithProducts = await Order.find({ _id: { $in: orderProducts } })
     .populate('products'); 
   
-    console.log(ordersWithProducts,"qqqqqqqqq");
  
     res.status(200).json({
       message: 'Ordered Products Details Found', 

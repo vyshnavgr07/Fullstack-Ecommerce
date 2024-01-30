@@ -16,7 +16,7 @@ const SideBar = () => {
     <div
       style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}
     >
-      <CDBSidebar textColor="#fff" backgroundColor="#2C3539">
+      <CDBSidebar  textColor="#fff" backgroundColor="#2C3539">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <NavLink
             to="/adminpage"

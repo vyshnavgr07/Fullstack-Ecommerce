@@ -16,7 +16,9 @@ const Women = () => {
       const response=await Axios.get('api/users/viewProduct')
       // console.log(response,"response");
       if(response.status=== 200){
-        toast.success("fetched succesfully")
+        toast.success("product fetched succesfully", {
+          toastId: 'success1',
+      })
         setProducts(response.data.data)
       }
     } catch(error){
@@ -48,7 +50,7 @@ fetchProduct()
                 <h2>
                   RS {item.price}
                 </h2>
-                
+                <h4 className='text-danger'>{item.description}</h4>
               </Card.Text>
               <Button onClick={() => navigate(`/viewproducts/${item.id}`)} variant='primary'>
                 View Products

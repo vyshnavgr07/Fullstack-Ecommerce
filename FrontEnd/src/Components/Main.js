@@ -35,7 +35,9 @@ const Main = () => {
       
         
        if(response.status===200){
-       toast.success("product fetched success")
+        toast.success("product fetched succesfully", {
+          toastId: 'success1',
+      })
         setProduct(response.data.data)
         // console.log(products,"products seet");
 
@@ -65,15 +67,9 @@ const handleViewProduct=(id)=>{
     <div>
 
 <div className='d-flex mx-5 mt-2 ' style={{justifyContent:"flex-end"}}>    
-  <form class="form-inline "  >
-    <input class="form-control mr-sm-2 bg-info"   onChange={(e)=>{setsearch(e.target.value)}}  type="search" placeholder="Search" aria-label="Search"/>
-  </form>
+  
 </div>
-
-
-
-
-    <Row className="justify-content-center m-4">
+ <Row className="justify-content-center m-4">
       {products.map((item) => (
         <Col key={item._id} xs={12} sm={6} md={4} lg={3} xl={3} className="mb-4">
           <Card style={{ width: '17rem' }}>
@@ -86,7 +82,7 @@ const handleViewProduct=(id)=>{
 
               </h2>
               
-                {/* <h2>RS {item.price}</h2> */}
+                
                 <h4 className='text-danger'>{item.description}</h4>
               </Card.Text>
               <Button className='bg-primary' onClick={() => handleViewProduct(item._id)} block variant="danger">

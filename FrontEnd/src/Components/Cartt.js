@@ -14,7 +14,7 @@ const Cartt = () => {
   const navigate = useNavigate();                                                               
   const [cartuser,setcartuser]=useState([]);
   const {id}=useParams()
-  
+
 
   const fetchCart=async()=>{
     try{
@@ -65,7 +65,9 @@ const handleChekout = async () => {
     
   }
 };
-
+const calculateTotal = (cartItems) => {
+  return cartItems.reduce((total, item) => total + item.productsId.price * item.quantity, 0).toFixed(2);
+};
 
 
   return (
@@ -113,7 +115,8 @@ const handleChekout = async () => {
                       </MDBCol>
                       <MDBCol md="12" lg="6" xl="4">
                         <MDBTypography tag="h5" className="mb-0">
-                          {item.productsId.price}
+                          {item.productsId.price*item.quantity}
+                          {/* {console.log(item.productsId.price*item.quantity)} */}
                         </MDBTypography>
                       </MDBCol>
 
@@ -131,7 +134,7 @@ const handleChekout = async () => {
         </MDBContainer>
       </section>
       <div>
-         <h1>TOTAL {""}</h1> 
+         <h1>TOTAL {calculateTotal(product)}</h1> 
         <button className="bg-warning m-2" onClick={""}>
           ClearCart
         </button>

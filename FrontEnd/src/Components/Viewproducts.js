@@ -28,7 +28,9 @@ const Viewproducts = () => {
       try {
         const response = await Axios.get(`api/users/products/${id}`); 
         if (response.status === 200) {
-          toast.success("data fetched successfully");
+          toast.success("product fetched succesfully", {
+            toastId: 'success1',
+        })
           setproduct(response.data.data);
         }
       } catch (error) {
@@ -53,6 +55,7 @@ const Viewproducts = () => {
     } catch (error) {
       console.error('Error adding product to the cart:', error);
       toast.error(error.response ? error.response.data.message : 'An error occurred');
+      
     }
   };
   

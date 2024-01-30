@@ -8,8 +8,6 @@ const Users = () => {
   const [products,setProduct]=useState([])
   useEffect(()=>{
     // const { userData } = useContext(Data);
-
- 
     const fetechProducts= async()=>{
       const response=await Axios.get("api/admin/users")
       if(response.status===200){
@@ -21,23 +19,7 @@ setProduct(response.data.data)
 fetechProducts()
 },[])
 
-console.log(products,"roti");
-
-
-
-
-  
-
-  
-
-  
-
-
-
-
-
-
-  return (
+ return (
     <div>
       {/* {userData.length<=0?<h1>No User Found</h1>:<h1>User Details</h1>} */}
     <div className='d-flex'>

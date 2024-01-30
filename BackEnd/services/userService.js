@@ -5,7 +5,7 @@ module.exports={
     viewproduct:async()=>{
         console.log("aaa");  
         const prods=await products.find(); 
-        console.log(products,"userservice"); 
+         
         if(prods){
             return prods
         }

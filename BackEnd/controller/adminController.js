@@ -33,7 +33,7 @@ module.exports=     {
 
     login: async (req,res) => {
         const { email, password } = req.body;     
-        // console.log("admin:",password)
+     
         if (
           email === process.env.ADMIN_EMAIL &&
           password === process.env.ADMIN_PASSWORD

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-
+import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 
 import { Axios } from '../../App';
 import SideBar from '../SideBar';
@@ -25,43 +25,38 @@ export default function Alloders() {
   return (
    
     <diV className='d-flex'>
-      
       <div  >
       <SideBar/>
 
       </div>
 
-    
-
-    <div className='mt-5 container'>
-      <h2 className='fw-bold' style={{textAlign:'center'}}>All Orders</h2>
-      <table className='table'>
-        <thead>
-          <tr>
+    <MDBTable>
+      <MDBTableHead>
+      <tr>
             <th scope='col'>Product ID</th>
             <th scope='col'>Date</th>
             <th scope='col'>Time</th>
-            {/* <th scope='col'>OrderId</th> */}
             <th scope='col'>PaymentId</th>
             <th scope='col'>Total</th>
            
           </tr>
-        </thead>
-        <tbody>
-          {data.map((product) => (
-            <tr key={product._id}>
-              <td>{product._id}</td>
+      </MDBTableHead>
+      <MDBTableBody>
+      {data.map((product) => (
+  
+        <tr className='table-info'>
+          {/* <th scope='row'>Info</th> */}
+          <td>{product._id}</td>
               <td>{product.date}</td>
               <td>{product.time}</td>
-              <td>{product.order_id}</td>
               <td>${product.payment_id}</td>
               <td>{product.total_amount}</td>
              
-            </tr>
+        </tr>
           ))}
-        </tbody>
-      </table>
-    </div>
+        
+      </MDBTableBody>
+    </MDBTable>
     </diV>
    
   );
