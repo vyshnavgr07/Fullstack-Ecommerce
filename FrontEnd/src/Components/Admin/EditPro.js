@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Axios } from '../../App';
 import { toast } from 'react-toastify';
 import SideBar from '../SideBar';
-console.log("editProductsssssssssssss");
 const EditPro = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,13 +13,14 @@ const EditPro = () => {
     price: '',
     description: '',
     image: '',
-    gender: '', // Added gender
+    gender: '', 
   });
 
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await Axios.get(`api/users/products/${id}`);
+        const response = await Axios.get(`api/admin//productbyid/${id}`);
+        console.log(response,"huhuhu");
  
         if (response.status === 200) {
           
@@ -41,7 +41,7 @@ const EditPro = () => {
     // Update the productData state when any input field changes
     setProductData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: value, 
     }));
   };
 
@@ -49,11 +49,11 @@ const EditPro = () => {
     e.preventDefault();
 
     try {
-      const response = await Axios.put(`api/admin/products/`, productData);
+      const response = await Axios.put("api/admin/products/", productData);
      
       if (response.status === 200) {
         toast.success('Product edited successfully');
-        navigate(`/adminproduct`);
+        navigate("/adminproduct");
       }
     } catch (error) {
       console.error('Error editing product:', error);
@@ -90,8 +90,8 @@ const EditPro = () => {
                     <label htmlFor="image">Image</label>
                     <input type="text" name="image" className="form-control" value={productData.image} onChange={handleChange} />
 
-                    <label htmlFor="gender">Gender</label>
-                    <input type="text" name="gender" className="form-control" value={productData.gender} onChange={handleChange} />
+                    {/* <label htmlFor="gender">Gender</label>
+                    <input type="text" name="gender" className="form-control" value={productData.gender} onChange={handleChange} /> */}
 
                     <button type="submit" className="btn btn-success mt-4">
                       Submit

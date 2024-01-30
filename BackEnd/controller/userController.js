@@ -426,7 +426,7 @@ payment:async(req,res)=>{
             message:"User Not found"  
         });
     }
-
+    
     const cartProducts=user.cart  
     console.log("cartuuuuu",cartProducts,);
     if(cartProducts.length===0){
@@ -495,7 +495,7 @@ success: async (req, res) => {
         order_id: session.id,
         payment_id: `demo ${Date.now()}`,
         total_amount: session.amount_total / 100,
-      });
+      }); 
   
       if (!orders) {
         return res.json({ status: "failure", message: "Error occurred while inputting to order DB" });
@@ -572,7 +572,7 @@ success: async (req, res) => {
 //         });
 //     }
 // }
-
+ 
 orderDetails: async (req, res) => {
   const userId = req.params.id;
 

@@ -16,7 +16,7 @@ const Registration = () => {
 
 
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     const name=namesref.current.value;
     const email = emailIdRef.current.value;
@@ -25,12 +25,14 @@ const Registration = () => {
 
     try{
       const payload={name,email,username,password};
-      const response=axios.post(
+      const response= await axios.post(
         "http://localhost:4000/api/users/register",payload);
+        console.log(response,"rusk");
+        
         if(response.status === 201){
           toast.success("Registration successful")
         
-navigate('/login');
+          navigate('/login');
         }   
       }catch(error){
           console.log(error);  

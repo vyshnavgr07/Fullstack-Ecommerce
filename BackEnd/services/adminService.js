@@ -31,7 +31,7 @@ module.exports={
     },
     allProducts:async()=>{
      const prod=await products.find()
-     if(prod){
+     if(prod){ 
         return prod
      }
     },
