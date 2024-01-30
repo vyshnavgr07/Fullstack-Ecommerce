@@ -38,28 +38,28 @@ const viewhandle=(id)=>{
     
     return (
    
-  <Row className='m-4'>
-    {MenProduct.map((item) => (
-      <Col key={item.id} xs={12} sm={6} md={4} lg={3} xl={3} className='mb-4'>
-        <Card className='' style={{ width: '18rem' }}>
-          <Card.Img style={{ width: '15rem', height: '10rem' }} variant='top' src={item.image} />
-          <Card.Body>
-            <Card.Title className='m-2'>{item.title}</Card.Title>
-            <Card.Text>
-              <h2>
-                RS {item.price}
-              </h2>
-              <h4 className='text-danger'>{item.description}</h4>
-            </Card.Text>
-            <Button onClick={() =>viewhandle(item._id) } variant='primary'>
-              View Products
-            </Button>
-          </Card.Body>
-        </Card>
-      </Col>
-    ))}
-  </Row>
-
+      <Row className='m-4'>
+      {MenProduct.map((item) => (
+        <Col key={item.id} xs={12} sm={6} md={4} lg={3} xl={3} className='mb-4'>
+          <Card className='' style={{ width: '18rem', height: '28rem' }}>
+            <Card.Img style={{ width: '15rem', height: '10rem', objectFit: 'cover' }} variant='top' src={item.image} />
+            <Card.Body>
+              <Card.Title className='m-2'>{item.title}</Card.Title>
+              <Card.Text>
+                <h2>
+                  RS {item.price}
+                </h2>
+                <h4 className='text-danger'>{item.description}</h4>
+              </Card.Text>
+              <Button onClick={() => viewhandle(item._id)} variant='primary'>
+                View Products
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+    
 
 
 

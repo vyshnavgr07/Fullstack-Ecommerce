@@ -160,9 +160,7 @@ const calculateTotal = (cartItems) => {
       </section>
       <div>
          <h1>TOTAL {calculateTotal(product)}</h1> 
-        <button className="bg-warning m-2" onClick={""}>
-          ClearCart
-        </button>
+       
 
 
   <button className="bg-success" onClick={()=>handleChekout()}>
