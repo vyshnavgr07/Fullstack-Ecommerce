@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Data } from '../App';
+
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Axios } from '../App';
@@ -31,7 +31,7 @@ const Main = () => {
     const fetchProduct = async () => {
       try {
        const response= await Axios.get('api/users/viewProduct');
-      //  console.log(response,"respuuu");
+    
       
         
        if(response.status===200){
@@ -64,7 +64,7 @@ const handleViewProduct=(id)=>{
 
 
   return (
-    <div  style={{backgroundColor: '#FFFFF0'}} >
+    <div   >
 
 <div className='d-flex mx-5 mt-2 ' style={{justifyContent:"flex-end"}}>    
   

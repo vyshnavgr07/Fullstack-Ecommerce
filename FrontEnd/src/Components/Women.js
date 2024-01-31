@@ -47,8 +47,8 @@ fetchProduct()
     <Row className='m-4'>
     {Wproduct.map((item) => (
       <Col key={item._id} xs={12} sm={6} md={4} lg={3} xl={3} className='mb-4'>
-        <Card className='' style={{ width: '18rem', height: '100%' }}>
-          <Card.Img style={{ width: '100%', height: '10rem', objectFit: 'cover' }} variant='top' src={item.image} />
+        <Card className='' style={{ width: '18rem', height: '28rem' }}>
+          <Card.Img style={{ width: '15re', height: '10rem', objectFit: 'cover' }} variant='top' src={item.image} />
           <Card.Body>
             <Card.Title className='m-2'>{item.title}</Card.Title>
             <Card.Text>
