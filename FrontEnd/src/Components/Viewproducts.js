@@ -78,36 +78,33 @@ const Viewproducts = () => {
 
   return (
     <div className='container mt-5 m-3'>
-      <div className='row justify-content-center align-items-center'>
-        <div className='col-md-6'>
-         
-            <Card className='w-100'>
-              <Card.Img
-                className='mx-auto' 
-                style={{ width: "15rem", height: "10rem" }}
-                variant='top'
-                src={product.image}
-              />
-              <Card.Body className='text-center'>
-               
-                <Card.Title>{product.title}</Card.Title> 
-                <h3 className='text-warning'>Rs {product.price}</h3>
-                <h5 className='text-danger'>{product.description}</h5>
- 
-               
-                  <Button className='bg-success' variant='primary' onClick={()=>handleAddToCart(product._id)}>
-                 
-                    Add to Cart
-                  </Button>
-            
-                 
-              </Card.Body>
-            </Card>
+  <div className='row justify-content-center align-items-center'>
+    <div className='col-md-6'>
+      <Card className='w-100 shadow'>
+        <Card.Img
+          className='mx-auto mt-3 img-fluid rounded'
+          style={{ width: "15rem", height: "10rem", objectFit: "cover" }}
+          variant='top'
+          src={product.image}
+          alt={product.title}
+        />
+        <Card.Body className='text-center'>
+          <Card.Title className='mb-3'>{product.title}</Card.Title>
+          <h3 className='text-warning'>Rs {product.price}</h3>
+          <p className='text-muted'>{product.description}</p>
 
-         
-        </div>
-      </div>
+          <Button
+            className='btn btn-success'
+            onClick={() => handleAddToCart(product._id)}
+          >
+            Add to Cart
+          </Button>
+        </Card.Body>
+      </Card>
     </div>
+  </div>
+</div>
+
   );
 };
 

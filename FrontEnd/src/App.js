@@ -6,14 +6,14 @@ import Home from './Components/Home';
 import { Route, Routes } from 'react-router-dom';
 import Main from './Components/Main';
 import Product from './Components/Products';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import Men from './Components/Men';
 import Women from './Components/Women';
 import Viewproducts from './Components/Viewproducts.js';
 import AdminHome from "./Components/AdminHome"
 import Registration from './Components/Registration';
 import Footer from './Common/Footer';
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminLogin from './Components/AdminLogin';
 import Payment from './Components/PaymentSuccess.js';
@@ -28,6 +28,7 @@ import EditPro from './Components/Admin/EditPro';
 
 import axios from "axios";
 import OrderData from './Components/OrderData.js';
+
 
 
 
@@ -50,6 +51,7 @@ export const Data=createContext();
 
 
 function App() {
+
 const [userData, setUserData ]=useState([]);
 const [login, setLogin ]=useState(false);
 const[product,setProduct]=useState(Product);
@@ -58,12 +60,55 @@ const [vieworder,setvieworder]=useState([]);
 
 const[loginuser,setloginuser]=useState([]);
 
+const [wishLit ,setWishlist] = useState([])
+const [wishStatus, setWishStatus] = useState(false)
   
+
+const userId=localStorage.getItem("userId")
+
+
+
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try {
+        const response = await Axios.get(`api/users/addtowishlist/${userId}`)
+        if(response.status === 200){
+          setWishlist(response.data.data)
+          setWishStatus(true)
+        }
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    fetchData()
+  },[])
+
+
+
+  const addToWishlist = async (productId) => {
+    try {
+      await Axios.post(`api/users/addtowishlist/${userId}`,{productId})
+      const response = await Axios.get(`api/users/showwishlist/${userId}`)
+      console.log(response,"repoooo");
+      if(response.status === 200){
+        toast.success("Added to wishlist")
+        setWishlist(response.data.data)
+
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
+
 
   
   return (
     <div className="App">
-     <Data.Provider value={{product,setProduct,cart,setcart,userData, setUserData,login,setLogin,vieworder,setvieworder,loginuser,setloginuser}}> 
+     <Data.Provider value={{product,setProduct,cart,setcart,userData, setUserData,login,setLogin,vieworder,setvieworder,loginuser,setloginuser,addToWishlist}}> 
       <Header/>
      
       <Routes>
@@ -89,9 +134,11 @@ const[loginuser,setloginuser]=useState([]);
         
 
       </Routes>
+ 
        <Footer/>
      
     </Data.Provider>
+
 
    
       <ToastContainer/>

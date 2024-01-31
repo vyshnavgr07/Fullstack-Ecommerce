@@ -377,6 +377,7 @@ addwishlist:async(req,res)=>{
 showWishList:async(req,res)=>{
     const userId=req.params.id;
     const user=await User.findById(userId);
+    // console.log(user,"usususus");
     if(!user){
         return res
         .status(404)
@@ -385,15 +386,24 @@ showWishList:async(req,res)=>{
     }
 
     const wishProdId=user.wishlist;
+    console.log(wishProdId,"wuwuwuwuwu");
     if(wishProdId.length===0){
         return res.status(200).json({
             status:"success",
-            message:"user wishlist is empty",data:[]
+            message:"user wishlist is empty",
+            data:[]
         })
     }
 
-    const wishProducts=await products.find({_id:{$in:wishProdId}});
-    res.status(200).json({
+    const wishProducts = await products.find({_id:{$in:wishProdId}})
+    console.log(wishProducts,"w");
+    if(!wishProducts){
+     return  res.status(404).json({
+        status:"error",
+        message:"product not found"
+      })
+    }
+   return res.status(200).json({
         status:"Success",
         message:"Wishlist product fetched succesfully",
         data:wishProducts
@@ -431,7 +441,7 @@ payment:async(req,res)=>{
     }
     
     const cartProducts=user.cart  
-    console.log("cartuuuuu",cartProducts,);
+    // console.log("cartuuuuu",cartProducts,);
     if(cartProducts.length===0){
         return res.status(200).json({"status":"success",message:"Cart is empty",data:[]});
     }
@@ -482,14 +492,16 @@ payment:async(req,res)=>{
 success: async (req, res) => {
     try {
       const { id, user, session } = sValue;
-      console.log(session,"ussssssssssss");
+      // console.log(session,"ussssssssssss");
       const userId = user._id;
+      console.log(userId,"first")
       const cartItems = user.cart;
-  
+      const productId = cartItems.map((item) => item.productsId)
+      console.log(productId,"hhh")
      
       const orders = await Order.create({
         userId: id,
-        products: cartItems.map((value) => new mongoose.Types.ObjectId(value._id)),
+        products:productId,
         order_id: session.id,
         payment_id: `demo ${Date.now()}`,
         total_amount: session.amount_total / 100,
@@ -510,7 +522,7 @@ success: async (req, res) => {
         { new: true }
       );
   
-      if (userUpdate) {
+      if (userUpdate.nModified === 1) {
         res.status(200).json({
           status: "Success",
           message: "Payment successful.",
@@ -574,7 +586,7 @@ success: async (req, res) => {
 orderDetails: async (req, res) => {
   const userId = req.params.id;
 
-  try {
+  
     const user = await User.findById(userId).populate('orders');
 
     if (!user) {
@@ -586,6 +598,8 @@ orderDetails: async (req, res) => {
 
     const orderProducts = user.orders;
 
+    // console.log(orderProducts,"userrrrrrrruuuu");
+
     if (orderProducts.length === 0) {
       return res.status(200).json({
         message: "You don't have any product orders",
@@ -593,21 +607,16 @@ orderDetails: async (req, res) => {
       });
     }
 
-    const ordersWithProducts = await Order.find({ _id: { $in: orderProducts } })
+    const ordersWithProducts = await Order.find({ _id:{ $in:orderProducts } })
     .populate('products'); 
   
- 
+//  console.log(ordersWithProducts,"prodddd")
+
     res.status(200).json({
       message: 'Ordered Products Details Found', 
       data: ordersWithProducts,
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ 
-      status: 'failure',
-      message: 'Internal Server Error',
-    });
-  }
+
 },
     
 

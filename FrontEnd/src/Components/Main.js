@@ -8,12 +8,13 @@ import './Main.css';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-
+import { MDBIcon } from 'mdb-react-ui-kit';
+import { Data } from '../App';
 const isUser=localStorage.getItem("userId")
 
 const Main = () => {
   const navigate = useNavigate();
-
+const {addToWishlist}=useContext(Data)
   const [products,setProduct]=useState([])
   // console.log(products,"products")
   const [search,setsearch]=useState("");
@@ -26,6 +27,7 @@ const Main = () => {
   //     return "";
   //   }
   // });
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -72,13 +74,19 @@ const handleViewProduct=(id)=>{
 <Row className="justify-content-center m-4">
   {products.map((item) => (
     <Col key={item._id} xs={12} sm={6} md={4} lg={3} xl={3} className="mb-4">
+        
       <Card style={{ width: '17rem', height: '100%' }}>
         <Card.Img style={{ width: '100%', height: '10rem', objectFit: 'cover' }} variant="top" src={item.image} alt='Loading...' />
         <Card.Body className="text-center">
           <Card.Title className='mt-2'>{item.title}</Card.Title>
           <Card.Text>
             <h2>RS {item.price}</h2>
-            <h4 className='text-danger'>{item.description}</h4>
+            {/* <h4 className='text-danger'>{item.description}</h4> */}
+            <MDBIcon style={{marginLeft:80, fontSize:25,}} far icon="heart" 
+                  
+                  onClick={() => 
+                    isUser ? addToWishlist(item._id): toast.error("Please login")
+                  } />
           </Card.Text>
           <Button className='bg-primary' onClick={() => handleViewProduct(item._id)} block variant="danger">
             View Products
