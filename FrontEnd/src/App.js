@@ -28,6 +28,7 @@ import EditPro from './Components/Admin/EditPro';
 
 import axios from "axios";
 import OrderData from './Components/OrderData.js';
+import WishList from './Components/WishList.js';
 
 
 
@@ -87,8 +88,6 @@ const userId=localStorage.getItem("userId")
     fetchData()
   },[])
 
-
-
   const addToWishlist = async (productId) => {
     try {
       await Axios.post(`api/users/addtowishlist/${userId}`,{productId})
@@ -103,6 +102,11 @@ const userId=localStorage.getItem("userId")
       toast.error(error.response.data.message)
     }
   }
+
+
+
+
+ 
 
 
   
@@ -131,7 +135,7 @@ const userId=localStorage.getItem("userId")
         <Route path='/adminmain'        element={<AdminMain/>}/>
         <Route path='/adminproduct/editpro/:id' element={<EditPro/>}  />
         <Route path='/orderDetails/:id'element={<OrderData/>}/>
-        
+        <Route path='/wishlist' element={<WishList/>}  />
 
       </Routes>
  

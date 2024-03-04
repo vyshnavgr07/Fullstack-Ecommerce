@@ -4,7 +4,7 @@ import { BsCartFill } from 'react-icons/bs';
 import { AiFillCalendar } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import { GoHeartFill } from "react-icons/go";
 import "./Header.css";
 
 const Header = () => {
@@ -15,7 +15,6 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("userName");
-    localStorage.removeItem("role");
     localStorage.removeItem("jwt");
     localStorage.removeItem("email");
 
@@ -30,6 +29,10 @@ const Header = () => {
   const logoStyles = {
     display: 'flex',
     alignItems: 'center',
+  };
+
+  const wishIcon = () => {
+    navigate('/wishlist');
   };
 
   return (
@@ -65,7 +68,8 @@ const Header = () => {
             </Nav>
 
             <BsCartFill style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={carticon} />
-            <AiFillCalendar style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={() => navigate(`/orderDetails/${id}`)} />
+            <GoHeartFill  style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={wishIcon} />
+            {/* <AiFillCalendar style={{ width: '2rem', height: '2rem', marginLeft: '1rem', cursor: 'pointer' }} onClick={() => navigate(`/orderDetails/${id}`)} /> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

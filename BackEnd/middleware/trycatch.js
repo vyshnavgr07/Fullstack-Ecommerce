@@ -8,7 +8,7 @@ const tryCatchMiddleware=(trycatchHandler)=>{
           
 
                const error_message = error.message || "Internal Server Error";
-            res.status(500).json({status:"failure",message:"error",error_message})   
+            res.status(500).json({status:"failure",message:"error",error_message}) 
         }
     }
 }

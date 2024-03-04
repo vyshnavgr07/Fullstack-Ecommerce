@@ -1,10 +1,68 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const BannerQ = () => {
+  const navigate=useNavigate()
   return (
     <Container fluid>
-      {/* First row with four images */}
+
+
+  {/* first  row with four images */}
+  <Row className='d-flex justify-content-center align-items-center mb-2 mt-4'>
+  <Col xs={12} md={3} className="mb-4 text-center">
+    <img
+      src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/september/230912-fl-hp-category-6up-update-mens.jpg"
+      alt=""
+      className="img-fluid rounded-circle border border-dark img-responsive"
+      style={{ width: '100%', maxHeight: '300px' }}
+
+      onClick={()=>navigate("/men")}
+    />
+    <h3 className="mt-3 text-uppercase">Men</h3>
+   
+  </Col>
+  <Col xs={12} md={3} className="mb-4 text-center">
+    <img
+      src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/september/230912-fl-hp-category-6up-update-womens.jpg"
+      alt=""
+      className="img-fluid rounded-circle border border-dark img-responsive"
+      style={{ width: '100%', maxHeight: '300px' }}
+      onClick={()=>navigate("/women")}
+    />
+    <h3 className="mt-3 text-uppercase">Women</h3>
+  </Col>
+  <Col xs={12} md={3} className="mb-4 text-center">
+    <img
+      src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/september/230912-fl-hp-category-6up-update-kids.jpg"
+      alt=""
+      className="img-fluid rounded-circle border border-dark img-responsive"
+      style={{ width: '100%', maxHeight: '300px' }}
+    />
+    <h3 className="mt-3 text-uppercase">Kids</h3>
+  </Col>
+  <Col xs={12} md={3} className="mb-4 text-center">
+    <img
+      src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/september/230912-fl-hp-category-6up-update-sale.jpg"
+      alt=""
+      className="img-fluid rounded-circle border border-dark img-responsive"
+      style={{ width: '100%', maxHeight: '300px' }}
+    />
+    <h3 className="mt-3 text-uppercase">Sale</h3>
+  </Col>
+</Row>
+
+
+
+
+
+
+
+
+
+
+
+      {/* second row with four images */}
       <Row className='d-flex justify-content-center mb-4'>
         <Col xs={12} md={3} className="mb-4">
           <img
@@ -36,7 +94,7 @@ const BannerQ = () => {
         </Col>
       </Row>
 
-      {/* Second row with a welcome message and image */}
+      {/* third row with a welcome message and image */}
       <Row className='mb-4'>
         <Col>
           <h1 className="text-center">Welcome to our store</h1>
@@ -48,7 +106,7 @@ const BannerQ = () => {
         </Col>
       </Row>
 
-      {/* Third row with a heading and another image */}
+      {/* fourth row with a heading and another image */}
       <Row className='mb-4'>
         <Col>
           <h1 className="text-center">Explore Top Picks</h1>

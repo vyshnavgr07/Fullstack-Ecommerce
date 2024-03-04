@@ -16,18 +16,19 @@ const Viewproducts = () => {
   const { login, loginuser } = useContext(Data);
   const[addcart,setaddcart]=useState([])
   const userId=localStorage.getItem("userId")
- console.log(userId,"usrusrusr");
+
   const {id} = useParams(); 
  
 
-  // const {id} = useParams(); 
-  // console.log(id,"thisss is my isddddd");
+ 
+  console.log(id,"thisss is my isddddd");
 
   useEffect(() => {
     const fetchedData = async () => {
      
       try {
         const response = await Axios.get(`api/users/products/${id}`);
+        console.log(response,"resssssi");
         
         if (response.status === 200) {
           toast.success("product fetched succesfully", {
@@ -43,7 +44,7 @@ const Viewproducts = () => {
     fetchedData();
   }, []);
 
- 
+//  console.log(product,"prff");
   const handleAddToCart = async (id) => {  
 
     try {
@@ -91,7 +92,8 @@ const Viewproducts = () => {
         <Card.Body className='text-center'>
           <Card.Title className='mb-3'>{product.title}</Card.Title>
           <h3 className='text-warning'>Rs {product.price}</h3>
-          <p className='text-muted'>{product.description}</p>
+
+          <h3 className='text-muted'>{product.description}</h3>
 
           <Button
             className='btn btn-success'

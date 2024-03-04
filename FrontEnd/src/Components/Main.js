@@ -10,24 +10,15 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { MDBIcon } from 'mdb-react-ui-kit';
 import { Data } from '../App';
-const isUser=localStorage.getItem("userId")
 
 const Main = () => {
+  const isUser = localStorage.getItem("userId")
+
   const navigate = useNavigate();
 const {addToWishlist}=useContext(Data)
   const [products,setProduct]=useState([])
   // console.log(products,"products")
-  const [search,setsearch]=useState("");
-  // const Ser = product.filter((item) => {    
-  //   if (search === "") {
-  //     return item;
-  //   } else if (item.title.toLowerCase().includes(search.toLowerCase())) {
-  //     return item;
-  //   } else {
-  //     return "";
-  //   }
-  // });
-
+  
 
   useEffect(() => {
     const fetchProduct = async () => {

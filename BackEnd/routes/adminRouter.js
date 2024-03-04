@@ -24,7 +24,7 @@ router
 .put("/products",tryCatchMiddleware(admin.updateProduct))
 
 .get("/orders",tryCatchMiddleware(admin.orderDtails))
-
+.get("/orders/:id",tryCatchMiddleware(admin.userOrderDetails))
 
 
 

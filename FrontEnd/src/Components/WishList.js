@@ -3,8 +3,9 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { Data } from "../App";
 import { Axios } from "../App";
-import toast from "react-hot-toast";
-import Navebar from "../componets/Navebar";
+import { toast } from "react-toastify";
+
+
 
 export default function Wishlist() {
     const userId = localStorage.getItem("userId")
@@ -19,7 +20,7 @@ export default function Wishlist() {
       const fechWishList = async () => {
          try {
             const  response = await Axios.get(`api/users/showwishlist/${userId}`)
-            console.log(response)
+            console.log(response,"ressssss")
             if(response.status === 200) {
                 setProducts(response.data.data)
             }
@@ -46,7 +47,7 @@ export default function Wishlist() {
           });
          console.log(response)
          if(response.status === 200) {
-            toast.success(response.data.message)
+            toast.error(response.data.message)
             await fechWishList()
          }
       } catch (error) {
@@ -57,7 +58,7 @@ export default function Wishlist() {
 
    return (
       <>
-      <Navebar/>
+     
         <section className="products d-flex flex-column align-items-center mb-5" style={{ paddingTop: "80px" }}>
   <h1 className="mt-5 text-black fw-bolder">
     <span>My</span> Wishlist
@@ -73,7 +74,7 @@ export default function Wishlist() {
           <h3>{value.title}</h3>
           <div className="inbox">
             <span className="strike-price">{/* Add the strike-through price if needed */}</span>
-            <span className="price">${value.price}</span>
+            <span className="price">RS {value.price}</span>
           </div>
           <div className="heart">
             {products.some((item) => item._id === value._id) && (

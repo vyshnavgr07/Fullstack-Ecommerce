@@ -362,7 +362,7 @@ addwishlist:async(req,res)=>{
     } 
     
     const updateResult = await User.updateOne({ _id: userId }, { $push: { wishlist: productId } });
-    console.log(updateResult,'xdf')
+    // console.log(updateResult,'xdf')
 
     
         // Check if the update was successful
@@ -396,7 +396,7 @@ showWishList:async(req,res)=>{
     }
 
     const wishProducts = await products.find({_id:{$in:wishProdId}})
-    console.log(wishProducts,"w");
+    // console.log(wishProducts,"w");
     if(!wishProducts){
      return  res.status(404).json({
         status:"error",
@@ -494,10 +494,10 @@ success: async (req, res) => {
       const { id, user, session } = sValue;
       // console.log(session,"ussssssssssss");
       const userId = user._id;
-      console.log(userId,"first")
+      // console.log(userId,"first")
       const cartItems = user.cart;
       const productId = cartItems.map((item) => item.productsId)
-      console.log(productId,"hhh")
+      // console.log(productId,"hhh")
      
       const orders = await Order.create({
         userId: id,
@@ -613,7 +613,7 @@ orderDetails: async (req, res) => {
 //  console.log(ordersWithProducts,"prodddd")
 
     res.status(200).json({
-      message: 'Ordered Products Details Found', 
+      message: 'Ordered Products Details Found',   
       data: ordersWithProducts,
     });
 

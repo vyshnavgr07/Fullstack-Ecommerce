@@ -4,11 +4,13 @@ import { Button, Card, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Axios } from '../App';
 import { toast } from 'react-toastify';
-
+import { MDBIcon } from 'mdb-react-ui-kit';
+import { Data } from '../App';
 const Men = () => {
     const navigate=useNavigate()
     const [products,setProducts]=useState([])
-
+    const  {addToWishlist} =useContext(Data) 
+    const isUser=localStorage.getItem("userId")
 useEffect(()=>{
     const fetchProducts=async()=>{
         try {
@@ -49,7 +51,14 @@ const viewhandle=(id)=>{
                 <h2>
                   RS {item.price}
                 </h2>
-                <h4 className='text-danger'>{item.description}</h4>
+                {/* <h4 className='text-danger'>{item.description}</h4> */}
+
+                <MDBIcon style={{marginLeft:80, fontSize:25,}} far icon="heart" 
+                  
+                  onClick={() => 
+                    isUser ? addToWishlist(item._id): toast.error("Please login")
+                  } />
+
               </Card.Text>
               <Button onClick={() => viewhandle(item._id)} variant='primary'>
                 View Products

@@ -180,8 +180,8 @@ deleteProduct:async(req,res)=>{
         });
     }
 
-    // const deletedProduct=await products.findOneAndDelete({_id:productId});
-    const deletedProduct=await adminService.deleteProducts(productId)
+    const deletedProduct=await products.findOneAndDelete({_id:productId});
+    // const deletedProduct=await adminService.deleteProducts(productId)
 
     if(!deletedProduct){
         return res.status(404).json({
@@ -239,6 +239,62 @@ orderDtails: async (req, res) => {
       status: "Success",
       message: "Successfully fetched order details",
       products,
+    });
+  },
+
+  status: async (req, res) => {
+    const totalRevenue = await order.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalProduct: { $sum: { $size: "$products" } },
+          totalRevenue: { $sum: "$total_amount" },
+        },
+      },
+    ]);
+
+    if (totalRevenue.length > 0) {
+      // You have results
+      res.status(200).json({ status: "Success", data: totalRevenue[0] });
+    } else {
+      // No results found
+      res
+        .status(200)
+        .json({
+          status: "Success",
+          data: { totalProduct: 0, totalRevenue: 0 },
+        });
+    }
+  },
+  userOrderDetails: async (req, res) => {
+    const userId = req.params.id;
+    //   console.log('User:', userId);
+      const user = await Users.findById(userId).populate('Orders')
+    // console.log('User:', user);
+  
+    if (!user) {
+        return res.status(404).json({
+            status: 'Failure',
+            message: 'User Not Found',
+        });
+    }
+  
+    const ordProduts = user.orders;
+    // console.log('User Orders:', ordProduts);
+  
+    if (ordProduts.length === 0) {
+        return res.status(200).json({
+            message: "You don't have any product orders.",
+            data: [],
+        });
+    }
+    
+    const ordersWithProducts = await Order.find({ _id: { $in: ordProduts } })
+    .populate("products")
+  
+    res.status(200).json({
+        message: 'Ordered Products Details Found',
+        data: ordersWithProducts,
     });
   }
   

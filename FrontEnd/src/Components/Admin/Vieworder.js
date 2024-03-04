@@ -22,6 +22,11 @@ export default function Alloders() {
       }
       fetchOrders()
     },[])
+
+
+    
+
+
   return (
    
     <diV className='d-flex'>
@@ -33,11 +38,12 @@ export default function Alloders() {
     <MDBTable>
       <MDBTableHead>
       <tr>
-            <th scope='col'>Product ID</th>
+            {/* <th scope='col'>Product ID</th> */}
             <th scope='col'>Date</th>
             <th scope='col'>Time</th>
             <th scope='col'>PaymentId</th>
             <th scope='col'>Total</th>
+            <th scope='col'>OrderId</th>
            
           </tr>
       </MDBTableHead>
@@ -46,11 +52,12 @@ export default function Alloders() {
   
         <tr className='table-info'>
           {/* <th scope='row'>Info</th> */}
-          <td>{product._id}</td>
+          {/* <td>{product._id}</td> */}
               <td>{product.date}</td>
               <td>{product.time}</td>
               <td>${product.payment_id}</td>
               <td>{product.total_amount}</td>
+              <td>{product.order_id}</td>
              
         </tr>
           ))}

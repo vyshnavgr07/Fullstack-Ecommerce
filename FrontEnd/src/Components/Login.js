@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Container, Row, Col, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -10,7 +10,10 @@ export default function Login() {
   const [LoginUser, setLoginUser] = useState([]);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+
+
+
+const handleLogin = async (e) => {
     e.preventDefault();
 
     const email = e.target.elements.email.value.trim();
@@ -40,7 +43,7 @@ export default function Login() {
           localStorage.setItem('email', response.data.Data.user.email);
         } else {
           localStorage.setItem('jwt', response.data.Data.token);
-          localStorage.setItem('role', 'role');
+         
         }
 
         if (email === adminEmail) {
@@ -59,10 +62,17 @@ export default function Login() {
         toast.error(response.message);
       }
     } catch (error) {
-      console.error(error);
-      toast.error('Invalid username or password');
+      if(error.response && error.response.status === 403 ){
+        navigate("/login")
+      }else{
+        console.error(error);
+        toast.error('Invalid username or password');
+      }
+      
     }
   };
+
+
 
   return (
     <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>

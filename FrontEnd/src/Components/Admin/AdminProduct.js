@@ -30,6 +30,14 @@ const AdminProduct = () => {
   },[])
 
   const handleRemove = async (productId) => {
+
+    
+
+
+
+
+
+
     try {
       await Axios.delete("api/admin/deleteproducts", {
         data: { productId },
@@ -109,7 +117,7 @@ const AdminProduct = () => {
                         </MDBCol>
 
                         <MDBCol md="12" lg="6" xl="4" className="text-end">
-                          <a href="#!" className="text-danger">
+                          <a  className="text-danger">
                             <MDBIcon onClick={() => handleRemove(item._id)} icon="trash text-danger" size="lg" />
                           </a>
                         </MDBCol>

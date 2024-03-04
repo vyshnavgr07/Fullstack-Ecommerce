@@ -60,7 +60,10 @@ useEffect(() => {
           <Card.Body>
             <Card.Title> USERS </Card.Title>
             <Card.Text>
-       <h1>  {user.length} </h1>
+              <div>
+              <h1>  {user.length} </h1>
+              </div>
+       
             </Card.Text>
           </Card.Body>
         </Card>
@@ -76,7 +79,10 @@ useEffect(() => {
           <Card.Body>
             <Card.Title> ORDERS </Card.Title>
             <Card.Text>
-       <h1>     {order.length} </h1> 
+             
+              <h1>     {order.length} </h1> 
+              
+      
             </Card.Text>
           </Card.Body>
         </Card>
@@ -90,7 +96,11 @@ useEffect(() => {
           <Card.Body>
             <Card.Title>Sales </Card.Title>
             <Card.Text>
-        <h1>  {userData.length} </h1>
+              
+              <h1>  {userData.length} </h1>
+
+              
+       
            
             </Card.Text>
           </Card.Body>
@@ -105,7 +115,12 @@ useEffect(() => {
           <Card.Body>
             <Card.Title> Delivery </Card.Title>
             <Card.Text>
-      <h1>  {userData.length+5} </h1>  
+
+   
+     <h1>  {userData.length+5} </h1>  
+   
+
+     
              
             </Card.Text>
           </Card.Body>
