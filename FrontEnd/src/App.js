@@ -29,6 +29,10 @@ import EditPro from './Components/Admin/EditPro';
 import axios from "axios";
 import OrderData from './Components/OrderData.js';
 import WishList from './Components/WishList.js';
+import Navbar from './Common/Navbar.js';
+import { PrimeReactProvider } from 'primereact/api';
+import Header2 from './Common/Header2.js';
+import Text from './Components/Text.jsx';
 
 
 
@@ -111,13 +115,13 @@ const userId=localStorage.getItem("userId")
 
   
   return (
-    <div className="App">
+    <div className="App bg-black">
      <Data.Provider value={{product,setProduct,cart,setcart,userData, setUserData,login,setLogin,vieworder,setvieworder,loginuser,setloginuser,addToWishlist}}> 
-      <Header/>
-     
+      <Navbar/>
+      
       <Routes>
       <Route  path='/'  element= {<Home />} />
-        <Route path='/login'  element= {<Login/>} />
+        <Route path='/login'  element= {<Text/>} />
         <Route path='/register'  element= { <Registration />} />
         <Route path='/main'  element= {<Main/> } />
         <Route path='/men'  element= {<Men/> } />

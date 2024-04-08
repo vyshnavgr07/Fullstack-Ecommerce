@@ -9,12 +9,12 @@ const BannerQ = () => {
 
 
   {/* first  row with four images */}
-  <Row className='d-flex justify-content-center align-items-center mb-2 mt-4'>
+  <Row className='d-flex justify-content-center align-items-center mb-2 mt-4 bg-61677A mt-2' style={{backgroundColor:'#FFF6E0'}}>
   <Col xs={12} md={3} className="mb-4 text-center">
     <img
       src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/september/230912-fl-hp-category-6up-update-mens.jpg"
       alt=""
-      className="img-fluid rounded-circle border border-dark img-responsive"
+      className="img-fluid  border border-dark img-responsive"
       style={{ width: '100%', maxHeight: '300px' }}
 
       onClick={()=>navigate("/men")}
@@ -26,7 +26,7 @@ const BannerQ = () => {
     <img
       src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/september/230912-fl-hp-category-6up-update-womens.jpg"
       alt=""
-      className="img-fluid rounded-circle border border-dark img-responsive"
+      className="img-fluid  border border-dark img-responsive"
       style={{ width: '100%', maxHeight: '300px' }}
       onClick={()=>navigate("/women")}
     />
@@ -36,7 +36,7 @@ const BannerQ = () => {
     <img
       src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/september/230912-fl-hp-category-6up-update-kids.jpg"
       alt=""
-      className="img-fluid rounded-circle border border-dark img-responsive"
+      className="img-fluid  border border-dark img-responsive"
       style={{ width: '100%', maxHeight: '300px' }}
     />
     <h3 className="mt-3 text-uppercase">Kids</h3>
@@ -45,7 +45,7 @@ const BannerQ = () => {
     <img
       src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/september/230912-fl-hp-category-6up-update-sale.jpg"
       alt=""
-      className="img-fluid rounded-circle border border-dark img-responsive"
+      className="img-fluid  border border-dark img-responsive"
       style={{ width: '100%', maxHeight: '300px' }}
     />
     <h3 className="mt-3 text-uppercase">Sale</h3>
@@ -55,14 +55,7 @@ const BannerQ = () => {
 
 
 
-
-
-
-
-
-
-
-      {/* second row with four images */}
+{/* second row with four images */}
       <Row className='d-flex justify-content-center mb-4'>
         <Col xs={12} md={3} className="mb-4">
           <img
@@ -97,7 +90,7 @@ const BannerQ = () => {
       {/* third row with a welcome message and image */}
       <Row className='mb-4'>
         <Col>
-          <h1 className="text-center">Welcome to our store</h1>
+          <h1 className="text-center  text-white">Welcome to our store</h1>
           <img
             src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/october/231016-fl-hoka-overcast-1up.jpg"
             alt=""
@@ -109,7 +102,7 @@ const BannerQ = () => {
       {/* fourth row with a heading and another image */}
       <Row className='mb-4'>
         <Col>
-          <h1 className="text-center">Explore Top Picks</h1>
+          <h1 className="text-center text-white">Explore Top Picks</h1>
           <img
             src="https://3.bp.blogspot.com/-jYviyiH5lCc/U2DDfcOxw0I/AAAAAAAAADk/ktx-5xRBbdA/s1600/10+top+shoe+brands+in+india.PNG"
             alt=""

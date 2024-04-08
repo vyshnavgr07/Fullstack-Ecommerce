@@ -28,7 +28,7 @@ const {addToWishlist}=useContext(Data)
       
         
        if(response.status===200){
-        toast.success("product fetched succesfully", {
+        console.log("product fetched succesfully", {
           toastId: 'success1',
       })
         setProduct(response.data.data)
@@ -36,7 +36,7 @@ const {addToWishlist}=useContext(Data)
 
        }
       } catch (error) {
-        toast.error(error.message);
+        console.log(error.message);
        
       }
     };

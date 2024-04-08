@@ -1,6 +1,8 @@
 import React from 'react'
 import Banner from './Banner'
 import BannerQ from './BannerQ'
+import Header2 from '../Common/Header2'
+import Text from './Text'
 
 
 
@@ -10,9 +12,11 @@ import BannerQ from './BannerQ'
 
 const Home = () => {
   return (
-    <div>
-
-  <Banner/>
+    <div  className='bg-white'>
+    
+<Header2/>
+<Banner/>
+  
 <BannerQ/>
     
 

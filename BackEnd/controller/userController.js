@@ -11,6 +11,18 @@ const stripe=require("stripe")(process.env.stripe_secret);
 let sValue=[];
 const userService=require("../services/userService");
 const Product = require("../modles/ProductSchema");
+const nodemailer = require('nodemailer')
+
+
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.SM_EMAIL,
+    pass: process.env.SM_PASSWORD,
+  },
+});
+
 
 
 module.exports={
@@ -26,6 +38,10 @@ module.exports={
 
         const {name,email,username,password}=value;
         const hasedPassword=await bcrypt.hash(password,10) 
+
+
+
+        
        
         await User.create({
             name:name, 

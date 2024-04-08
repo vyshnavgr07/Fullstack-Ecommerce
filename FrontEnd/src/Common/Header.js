@@ -37,7 +37,7 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar expand="lg" className="body-tertiary">
+      <Navbar expand="lg" className="body-tertiary ">
         <Container fluid>
           <Navbar.Brand href="/" className="company-logo">
             <div style={{ ...logoStyles, animation: 'spin 1.5s infinite' }}>
@@ -49,7 +49,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto my-2 my-lg-0 fw-bold" style={{ maxHeight: '100px' }} navbarScroll variant="black">
+            <Nav className="me-auto my-2 my-lg-0 fw-bold " style={{ maxHeight: '100px' }} navbarScroll variant="black">
               <Nav.Link onClick={() => navigate('/main')}>All Category</Nav.Link>
               <Nav.Link onClick={() => navigate('/men')}>MEN</Nav.Link>
               <Nav.Link onClick={() => navigate('/women')}>WOMEN</Nav.Link>
