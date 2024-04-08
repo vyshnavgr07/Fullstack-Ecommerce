@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { Axios } from '../App';
+import loginn  from "../Components/Assets/loginn.jpg"
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBRow,
+  MDBCol,
+  MDBIcon,
+  MDBInput
+} from 'mdb-react-ui-kit';
 
 const Text = () => {
   const [LoginUser, setLoginUser] = useState([]);
@@ -37,6 +50,7 @@ const Text = () => {
           localStorage.setItem('email', response.data.Data.user.email);
         } else {
           localStorage.setItem('jwt', response.data.Data.token);
+         
         }
 
         if (email === adminEmail) {
@@ -65,59 +79,47 @@ const Text = () => {
     }
   };
 
-  return (
-    <div className='bg-bgColor min-h-screen flex items-center justify-center p-6 h-screen'>
-      <div className='w-full md:w-75 h-screen lg:h-auto 2xl:h-83vh py-8 lg:py-0 d-flex flex-row-reverse bg-primary rounded-xl overflow-hidden shadow-xl'>
-        {/* LEFT */}
-        <div className='w-full lg:w-50 h-screen p-4 md:p-10 2xl:p-20 flex flex-column justify-center'>
-          <div className='w-full d-flex gap-2 items-center mb-6'>
-            <span className='text-2xl text-primary'>ShoeShop</span>
-          </div>
-          <p className='text-primary-1 text-base font-semibold'>
-            Log in to your account
-          </p>
-          <span className='text-sm mt-2 text-primary-2'>Welcome Back</span>
-          <form className='py-4 py-md-8 d-flex flex-column gap-3' onSubmit={handleLogin}>
-            <input
-              name='email'
-              placeholder='email@example.com'
-              type='email'
-              className='form-control'
-            />
-            <input
-              name='password'
-              placeholder='Password'
-              type='password'
-              className='form-control'
-            />
-            <Link to='/reset-password' className='text-sm text-end text-blue font-semibold'>
-              Forget Password
-            </Link>
-            <button type='submit' className='btn btn-primary'>Login</button>
-          </form>
-          <p className='text-primary-2 text-sm text-center'>
-            Don't have an account?{' '}
-            <Link to='/' className='text-primary font-semibold'>Create Account</Link>
-          </p>
-        </div>
 
-        {/* RIGHT */}
-        <div className='hidden lg:flex w-50 h-screen flex-column items-center justify-center bg-primary'>
-          <div className='relative w-full h-full d-flex items-center justify-content-center'>
-            <img
-              src='https://blog-frontend.envato.com/cdn-cgi/image/width=2560,quality=75,format=auto/uploads/sites/2/2022/04/E-commerce-App-JPG-File-scaled.jpg'
-              alt='bgImage'
-              className='w-75 h-75 rounded-circle object-cover'
-            />
-          </div>
-          <div className='mt-4 text-center'>
-            <p className='text-white text-base'>Connect with friends & share for fun</p>
-            <span className='text-sm text-white'>Share memories with friends and the world.</span>
-          </div>
-        </div>
-      </div>
-    </div>
+
+
+  return (
+  
+    <MDBContainer className="my-5" >
+
+      <MDBCard>
+        <MDBRow className='g-0'>
+          <MDBCol md='6'>
+            <MDBCardImage src='https://blog-frontend.envato.com/cdn-cgi/image/width=2560,quality=75,format=auto/uploads/sites/2/2022/04/E-commerce-App-JPG-File-scaled.jpg' alt="login form" className='rounded-start w-100 h-100'/>
+          </MDBCol>
+          <MDBCol md='6'>
+            <MDBCardBody className='d-flex flex-column'>
+              <div className='d-flex flex-row mt-2'>
+                <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }}/>
+                <span className="h1 fw-bold mb-0">The shoerack</span>
+              </div>
+              <h5 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px'}}>Sign into your account</h5>
+
+              <form onSubmit={handleLogin}>
+                <MDBInput wrapperClass='mb-4' label='Email address' id='email' type='email' size="lg"/>
+                <MDBInput wrapperClass='mb-4' label='Password' id='password' type='password' size="lg"/>
+
+                <MDBBtn className="mb-4 px-5" color='dark' size='lg' type="submit">Login</MDBBtn>
+              </form>
+
+              
+              <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>Don't have an account? <a href="/register" style={{color: '#393f81'}}>Register here</a></p>
+
+              <div className='d-flex flex-row justify-content-start'>
+                <a href="#!" className="small text-muted me-1">Terms of use.</a>
+                <a href="#!" className="small text-muted">Privacy policy</a>
+              </div>
+            </MDBCardBody>
+          </MDBCol>
+        </MDBRow>
+      </MDBCard>
+    </MDBContainer>
+  
   );
-};
+}
 
 export default Text;

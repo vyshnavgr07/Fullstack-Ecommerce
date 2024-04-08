@@ -45,7 +45,7 @@ const {addToWishlist}=useContext(Data)
   },[]);
   
 
-
+console.log(products,"prooo");
 
 const handleViewProduct=(id)=>{
   if(isUser){
@@ -59,7 +59,7 @@ const handleViewProduct=(id)=>{
   return (
     <div   >
 
-<div className='d-flex mx-5 mt-2 ' style={{justifyContent:"flex-end"}}>    
+<div className='d-flex mx-5 mt-2  bg-white ' style={{justifyContent:"flex-end"}}>    
   
 </div>
 <Row className="justify-content-center m-4">
@@ -72,7 +72,7 @@ const handleViewProduct=(id)=>{
           <Card.Title className='mt-2'>{item.title}</Card.Title>
           <Card.Text>
             <h2>RS {item.price}</h2>
-            {/* <h4 className='text-danger'>{item.description}</h4> */}
+            <h4 className='text-danger'>{item.description}</h4>
             <MDBIcon style={{marginLeft:80, fontSize:25,}} far icon="heart" 
                   
                   onClick={() => 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
+import Side from "../Components/Side"
 const BannerQ = () => {
   const navigate=useNavigate()
   return (
@@ -57,7 +57,7 @@ const BannerQ = () => {
 
 {/* second row with four images */}
       <Row className='d-flex justify-content-center mb-4'>
-        <Col xs={12} md={3} className="mb-4">
+        {/* <Col xs={12} md={3} className="mb-4">
           <img
             src="https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2023/november/231121-fl-up-to-50-off-bf-3up-1-nike-b.jpg"
             alt=""
@@ -84,7 +84,9 @@ const BannerQ = () => {
             alt=""
             className="img-fluid"
           />
-        </Col>
+        </Col> */}
+
+        <Side/>
       </Row>
 
       {/* third row with a welcome message and image */}
@@ -110,6 +112,7 @@ const BannerQ = () => {
           />
         </Col>
       </Row>
+     
     </Container>
   );
 };

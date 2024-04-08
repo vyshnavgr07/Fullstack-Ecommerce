@@ -33,6 +33,7 @@ import Navbar from './Common/Navbar.js';
 import { PrimeReactProvider } from 'primereact/api';
 import Header2 from './Common/Header2.js';
 import Text from './Components/Text.jsx';
+import Reg from './Components/Reg.jsx';
 
 
 
@@ -115,14 +116,14 @@ const userId=localStorage.getItem("userId")
 
   
   return (
-    <div className="App bg-black">
+    <div className="App ">
      <Data.Provider value={{product,setProduct,cart,setcart,userData, setUserData,login,setLogin,vieworder,setvieworder,loginuser,setloginuser,addToWishlist}}> 
       <Navbar/>
       
       <Routes>
       <Route  path='/'  element= {<Home />} />
         <Route path='/login'  element= {<Text/>} />
-        <Route path='/register'  element= { <Registration />} />
+        <Route path='/register'  element= { <Reg/>} />
         <Route path='/main'  element= {<Main/> } />
         <Route path='/men'  element= {<Men/> } />
         <Route path='/women'  element= {<Women/> } />
