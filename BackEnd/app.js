@@ -9,7 +9,7 @@ const app=express()
 const port =4000
 
 app.use(cors());
-const mongodb="mongodb://127.0.0.1:27017/ecommerce"; 
+const mongodb="mongodb+srv://vyshnavgr07:WSwTcAuNANa161a5@cluster0.tmwbo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; 
     // useNewUrlParser:true,
     // useUnifiedTopolgy:true,
 
