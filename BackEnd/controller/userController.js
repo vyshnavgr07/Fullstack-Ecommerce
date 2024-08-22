@@ -1,5 +1,5 @@
 
-const bcrypt=require("bcrypt");
+const bcrypt=require("bcryptjs");
 const User=require("../modles/UsersSchema");
 const { joiUserSchema } = require("../modles/validationSchema");
 const jwt=require("jsonwebtoken")
