@@ -34,6 +34,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import Header2 from './Common/Header2.js';
 import Text from './Components/Text.jsx';
 import Reg from './Components/Reg.jsx';
+import Taske from './Components/Taske.js';
 
 
 
@@ -119,7 +120,7 @@ const userId=localStorage.getItem("userId")
     <div className="App ">
      <Data.Provider value={{product,setProduct,cart,setcart,userData, setUserData,login,setLogin,vieworder,setvieworder,loginuser,setloginuser,addToWishlist}}> 
       <Navbar/>
-      
+      <Taske/>
       <Routes>
       <Route  path='/'  element= {<Home />} />
         <Route path='/login'  element= {<Text/>} />
