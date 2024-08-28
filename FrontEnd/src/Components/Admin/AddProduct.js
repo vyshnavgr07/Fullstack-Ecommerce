@@ -36,7 +36,7 @@ const AddProduct = () => {
     try {
       const jwtToken = localStorage.getItem('jwt');
       const response = await axios.post(
-        "http://localhost:4000/api/admin/products",
+        "https://fullstack-ecommerce-6tus.onrender.com/api/admin/products",
         formData,
         {
           headers: {
