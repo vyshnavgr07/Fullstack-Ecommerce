@@ -8,30 +8,7 @@ const order=require("../modles/orderSchema")
 const adminService=require("../services/adminService")
 
 module.exports=     {
-    // login:async(req,res)=>{
-    //     //const {email,password}=req.body;
-    //     // console.log(process.env.ADMIN_EMAIL);
-    //    const reqBody= adminService.adminLogin(req.body)
-
-    //    if(reqBody){
-    //     res.status(200).send({
-    //         status:"success", 
-    //         message:"Admin registaration succesful",
-    //         data:reqBody 
-
-    //     });
-    //    }
-   
-    //     else {
-    //        res.status(404).json({
-    //         status:"error",
-    //         message:"this is not an admin"
-    //       })
-    //         }
-    //     },
-
-
-    login: async (req,res) => {
+ login: async (req,res) => {
         const { email, password } = req.body;     
      
         if (

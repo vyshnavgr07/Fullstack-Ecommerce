@@ -25,7 +25,7 @@ const handleLogin = async (e) => {
       return;
     }
 
-    let url = 'http://localhost:4000/api/users/userlogin';
+    let url = 'https://fullstack-ecommerce-6tus.onrender.com/userlogin';
 
     if (email === adminEmail) {
       url = 'http://localhost:4000/api/admin/login';
