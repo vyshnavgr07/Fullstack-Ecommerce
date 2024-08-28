@@ -37,7 +37,7 @@ const Reg = () => {
         try{
           const payload={name,email,username,password};
           const response= await axios.post(
-            "http://localhost:4000/api/users/register",payload);
+            "https://fullstack-ecommerce-6tus.onrender.com/api/users/register",payload);
             console.log(response,"rusk");
             
             if(response.status === 201){
