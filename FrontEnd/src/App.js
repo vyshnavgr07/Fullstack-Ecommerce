@@ -46,6 +46,7 @@ export const Axios=axios.create({
     Authorization:localStorage.getItem('jwt')
   }
 })
+console.log(process.env.REACT_APP_API_URL,'env')
 
 
 
@@ -80,11 +81,12 @@ const userId=localStorage.getItem("userId")
 
     const fetchData = async () => {
       try {
-        const response = await Axios.get(`api/users/addtowishlist/${userId}`)
-        if(response.status === 200){
-          setWishlist(response.data.data)
-          setWishStatus(true)
-        }
+        // const response = await Axios.get(`api/users/addtowishlist/${userId}`)
+        // if(response.status === 200){
+        //   setWishlist(response.data.data)
+        //   setWishStatus(true)
+        // }
+        console.log('hai')
         
       } catch (error) {
         console.log(error)

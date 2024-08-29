@@ -15,7 +15,7 @@ export default function Wishlist() {
 
    const [products ,setProducts] = useState([])
       const navigate = useNavigate();
-   const{addToWishlist}=useContext(Data)
+  //  const{addToWishlist}=useContext(Data)
 
       const fechWishList = async () => {
          try {
