@@ -23,7 +23,7 @@ const {addToWishlist}=useContext(Data)
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-       const response= await Axios.get('api/users/viewProduct');
+       const response= await axios.get('https://fullstack-ecommerce-6tus.onrender.com/api/users/viewProduct');
     
       
         

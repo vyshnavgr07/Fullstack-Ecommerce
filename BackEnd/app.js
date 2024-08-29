@@ -6,6 +6,7 @@ const bodyParser=require('body-parser')
 const userRouter=require("./routes/userRouter")
 const adminRouter=require("./routes/adminRouter")
 const app=express()
+const morgan= require('morgan')
 const port =4000
 
 app.use(cors());
@@ -29,9 +30,9 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
 app.use(express.json())
-
+app.use(morgan('dev'))
 app.use("/api/admin",adminRouter) 
-app.use("/api/users",userRouter)
+app.use("/api/users",userRouter)           
 
 
 

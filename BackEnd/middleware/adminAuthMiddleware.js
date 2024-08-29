@@ -1,6 +1,7 @@
 const jwt=require('jsonwebtoken')
 
 module.exports=function verifyToken(req,res,next){
+    console.log("first")
     const token =req.headers["authorization"]
     // console.log("token",token)
 

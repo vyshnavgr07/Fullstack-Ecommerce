@@ -39,7 +39,7 @@ fetchProduct()
 
 
 
-  const Wproduct = Products.filter((item) => item.category === 'women'); 
+  const Wproduct = Products.filter((item) => item.category ==='women'); 
 
 
   const viewhandle=(id)=>{
@@ -49,7 +49,7 @@ fetchProduct()
 
   return (
     <Row className='m-4'>
-    {Products.map((item) => (
+    {Wproduct?.map((item) => (
       <Col key={item._id} xs={12} sm={6} md={4} lg={3} xl={3} className='mb-4'>
         <Card className='' style={{ width: '18rem', height: '28rem' }}>
           <Card.Img style={{ width: '100%', height: '10rem', objectFit: 'cover' }} variant='top' src={item.image} />

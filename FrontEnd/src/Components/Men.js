@@ -6,6 +6,7 @@ import { Axios } from '../App';
 import { toast } from 'react-toastify';
 import { MDBIcon } from 'mdb-react-ui-kit';
 import { Data } from '../App';
+import axios from 'axios';
 const Men = () => {
     const navigate=useNavigate()
     const [products,setProducts]=useState([])
@@ -14,7 +15,7 @@ const Men = () => {
 useEffect(()=>{
     const fetchProducts=async()=>{
         try {
-            const response=await Axios.get('api/users/viewProduct')
+            const response=await axios.get('https://fullstack-ecommerce-6tus.onrender.com/api/users/viewProduct')
             // console.log(response,"asdfghjk");
             if(response.status===200){
                 toast.success("product fetched succesfully", {

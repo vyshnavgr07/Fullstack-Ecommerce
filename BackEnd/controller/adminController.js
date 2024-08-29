@@ -9,6 +9,7 @@ const adminService=require("../services/adminService")
 
 module.exports=     {
  login: async (req,res) => {
+  console.log("reesssss")
         const { email, password } = req.body;     
      
         if (

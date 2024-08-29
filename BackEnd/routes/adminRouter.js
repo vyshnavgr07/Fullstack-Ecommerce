@@ -11,7 +11,7 @@ router
 
 .post("/login",tryCatchMiddleware(admin.login))
 
-.use(verifyToken)   
+// .use(verifyToken)   
 
 .get("/users",tryCatchMiddleware(admin.allUser))
 .get("/users/:id",tryCatchMiddleware(admin.useById))
